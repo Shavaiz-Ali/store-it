@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const Common = () => {
+const CommonLayout = () => {
   return (
     <div className="max-w-[580px] hidden lg:flex flex-col shrink-0 justify-center items-start py-[114px] px-[75px] bg-primaryOrangeLight h-screen overflow-hidden gap-y-[96px]">
       <div className="flex justify-center items-center gap-x-2">
@@ -31,4 +31,4 @@ const Common = () => {
   );
 };
 
-export default Common;
+export default CommonLayout;
