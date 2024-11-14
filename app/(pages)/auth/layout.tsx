@@ -11,7 +11,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex gap-x-2 min-h-screen w-full">
+    <div className="flex gap-x-2 min-h-screen w-full sm:p-0 px-4">
       <CommonLayout />
       <div className="w-full h-screen flex flex-col lg:gap-0 gap-4 justify-center items-center ">
         <div className="lg:hidden">

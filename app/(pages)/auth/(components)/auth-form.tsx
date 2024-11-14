@@ -27,11 +27,15 @@ const AuthForm = (type: { type: FormType }) => {
     },
   });
 
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    console.log(data);
+  };
+
   return (
     <FormProvider {...form}>
       <form
         className="space-y-3 flex flex-col justify-start w-full"
-        onSubmit={form.handleSubmit(() => console.log("form"))}
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <h1 className="text-[46px] leading-[56px] font-[family-name:var(--font-poppins-bold)] text-backgroundGrayLight font-[700]">
           {type.type === "login" ? "Login" : "Create Account"}
@@ -51,6 +55,7 @@ const AuthForm = (type: { type: FormType }) => {
                       placeholder="Enter your full name"
                       className="w-full border-none shadow-none p-0 shad-no-focus placeholder:text-light-200 outline-none ring-offset-transparent focus:ring-transparent focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 h-[20px] text-backgroundGrayDark font-[family-name:var(--font-poppins-semibold)] text-sm leading-5"
                       {...field}
+                      autoComplete="off"
                     />
                   </FormControl>
                 </div>
@@ -75,6 +80,7 @@ const AuthForm = (type: { type: FormType }) => {
                     placeholder="Enter your email"
                     className=" border-none shadow-none p-0 shad-no-focus placeholder:text-light-200 outline-none ring-offset-transparent focus:ring-transparent focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 h-[20px] text-backgroundGrayDark font-[family-name:var(--font-poppins-semibold)] text-sm leading-5"
                     {...field}
+                    autoComplete="off"
                   />
                 </FormControl>
               </div>

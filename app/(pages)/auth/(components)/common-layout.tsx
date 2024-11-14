@@ -25,6 +25,7 @@ const CommonLayout = () => {
           height={242}
           width={242}
           className="text-center self-center"
+          priority={false}
         />
       </div>
     </div>
