@@ -11,22 +11,18 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <div className="flex min-h-screen">
-          <CommonLayout />
-          <div className="w-full h-screen flex flex-col lg:gap-0 gap-4 justify-center items-center">
-            <div className="lg:hidden">
-              <div className="flex justify-center items-center gap-x-2">
-                <p className="text-[37px] font-[family-name:var(--font-poppins-medium)] leading-[56px] text-primaryOrangeDark font-[400]">
-                  Storeit
-                </p>
-              </div>
-            </div>
-            {children}
+    <div className="flex gap-x-2 min-h-screen w-full">
+      <CommonLayout />
+      <div className="w-full h-screen flex flex-col lg:gap-0 gap-4 justify-center items-center ">
+        <div className="lg:hidden">
+          <div className="flex items-center gap-x-2">
+            <p className="text-[37px] font-[family-name:var(--font-poppins-medium)] leading-[56px] text-primaryOrangeDark font-[400]">
+              Storeit
+            </p>
           </div>
         </div>
-      </body>
-    </html>
+        {children}
+      </div>
+    </div>
   );
 }
