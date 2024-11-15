@@ -1,5 +1,6 @@
 "use client";
 
+import { createAccount } from "@/actions/auth/register";
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -27,8 +28,20 @@ const AuthForm = (type: { type: FormType }) => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     console.log(data);
+    try {
+      // const formData = new FormData();
+      // formData.append("email", data.email);
+      // formData.append("fullName", data?.fullName);
+      // if (type.type === "register") {
+      //   console.log(data);
+      //   const response = await createAccount(formData as FormData);
+      //   console.log(response);
+      // }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -52,6 +65,7 @@ const AuthForm = (type: { type: FormType }) => {
                   </FormLabel>
                   <FormControl>
                     <Input
+                      type="text"
                       placeholder="Enter your full name"
                       className="w-full border-none shadow-none p-0 shad-no-focus placeholder:text-light-200 outline-none ring-offset-transparent focus:ring-transparent focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 h-[20px] text-backgroundGrayDark font-[family-name:var(--font-poppins-semibold)] text-sm leading-5"
                       {...field}
@@ -77,6 +91,7 @@ const AuthForm = (type: { type: FormType }) => {
                 </FormLabel>
                 <FormControl>
                   <Input
+                    type="email"
                     placeholder="Enter your email"
                     className=" border-none shadow-none p-0 shad-no-focus placeholder:text-light-200 outline-none ring-offset-transparent focus:ring-transparent focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 h-[20px] text-backgroundGrayDark font-[family-name:var(--font-poppins-semibold)] text-sm leading-5"
                     {...field}
@@ -89,7 +104,10 @@ const AuthForm = (type: { type: FormType }) => {
           )}
         />
         {/* submit form button */}
-        <Button className="w-full sm:w-[580px] h-[66px] rounded-[41px] bg-primaryOrangeLight shadow-md shadow-[#4159D64D] text-[15px] leading-[20px] font-[600] text-center font-[family-name:var(--font-poppins-semibold)] hover:bg-primaryOrangeLight">
+        <Button
+          // type="submit"
+          className="w-full sm:w-[580px] h-[66px] rounded-[41px] bg-primaryOrangeLight shadow-md shadow-[#4159D64D] text-[15px] leading-[20px] font-[600] text-center font-[family-name:var(--font-poppins-semibold)] hover:bg-primaryOrangeLight"
+        >
           {type.type === "login" ? "Login" : "Create Account"}
         </Button>
 

@@ -4,11 +4,18 @@ import React from "react";
 const CommonLayout = () => {
   return (
     <div className="w-1/2 hidden lg:flex flex-col shrink-[0.5] justify-center items-start py-[114px] px-[75px] bg-primaryOrangeLight max-h-screen overflow-hidden gap-y-[96px]">
-      <div className="flex justify-center items-center gap-x-2">
+      {/* <div className="flex justify-center items-center gap-x-2">
         <p className="text-[37px] font-[family-name:var(--font-poppins-medium)] leading-[56px] text-[#ffffff] font-[400]">
           Storeit
         </p>
-      </div>
+      </div> */}
+      <Image
+        src={"/icons/logo-full.svg"}
+        alt=""
+        height={82}
+        width={224}
+        className="h-auto"
+      />
       <div className="space-y-4">
         <h1 className="font-[family-name:var(--font-poppins-bold)] text-[46px] leading-[56px] text-[#ffffff] font-[700]">
           Manage your files the best way
