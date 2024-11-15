@@ -27,6 +27,7 @@ const OtpForm = ({ email }: any) => {
           value={value}
           onChange={(value: string) => setValue(value)}
           className="w-full"
+          // pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
         >
           <InputOTPGroup className="sm:space-x-4 space-x-2 rounded-none  my-3 w-full">
             {Array(6)

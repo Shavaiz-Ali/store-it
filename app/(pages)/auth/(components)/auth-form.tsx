@@ -1,5 +1,6 @@
 "use client";
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createAccount } from "@/actions/auth/register";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,7 +11,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { FormType, FormValidationSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -35,7 +35,7 @@ const AuthForm = (type: { type: FormType }) => {
     try {
       const formData = new FormData();
       formData.append("email", data.email);
-      formData.append("fullName", data?.fullName);
+      formData.append("fullName", data?.fullName as string);
       if (type.type === "register") {
         console.log(data);
         const response = await createAccount(formData as FormData);
