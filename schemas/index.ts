@@ -5,10 +5,6 @@ export type FormType = "login" | "register";
 export const FormValidationSchema = (type: FormType) => {
   return z.object({
     email: z.string({ message: "invalid email" }).email(),
-    password: z
-      .string()
-      .min(6, { message: "Password must be of atleast 6 characters" })
-      .max(12),
     fullName:
       type === "register"
         ? z

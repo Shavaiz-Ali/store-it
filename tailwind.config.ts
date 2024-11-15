@@ -9,6 +9,9 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: "400px",
+      },
       colors: {
         // Primary colors
         primaryOrangeLight: "#FA7275",

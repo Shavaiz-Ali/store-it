@@ -1,13 +1,23 @@
+"use server";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { connectDB } from "@/config";
 import { User } from "@/models/auth/user";
 import { sendEmail } from "@/utils";
 
+const generateOtp = () => {
+  // Generate a random 6-digit OTP
+  const otp = Math.floor(100000 + Math.random() * 900000);
+  return otp;
+};
+
 export const createAccount = async (formdata: FormData) => {
+  await connectDB();
   try {
     const fullName = formdata.get("fullName");
     const email = formdata.get("email");
 
-    console.log(fullName, email);
+    console.log("this is the data", fullName, email);
 
     if (!email || !fullName) {
       return {
@@ -17,7 +27,9 @@ export const createAccount = async (formdata: FormData) => {
       };
     }
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({
+      $or: [{ email }],
+    });
 
     if (existingUser) {
       return {
@@ -27,23 +39,23 @@ export const createAccount = async (formdata: FormData) => {
       };
     }
 
+    const otp = generateOtp();
+
     const mail = await sendEmail({
       sender: {
         name: "Store it",
         address: "storeit@example.com",
       },
       receipients: [{ name: "John Doe", address: email as string }],
-      subject: "Email verification email",
-      message: "8888586",
+      subject: "OTP verification",
+      message: `<h1>This is your otp:${otp}</h1>`,
     });
 
-    console.log("mail send check");
-
-    if (mail.accepted) {
+    if (mail.accepted?.length > 0) {
       return {
-        success: false,
+        success: true,
         message: "Email send successfully",
-        status: 400,
+        status: 200,
       };
     }
     const user = new User({
