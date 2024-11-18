@@ -1,33 +1,33 @@
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
-import { TiTick } from "react-icons/ti";
-// import {success}
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+// import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+// import { TiTick } from "react-icons/ti";
+// import { toast } from "@/hooks/use-toast";
 
-const FormApiMessage = ({
-  message,
-  messageType,
-}: {
-  message: string;
-  messageType: string | undefined;
-}) => {
-  return (
-    <Alert
-      className="mt-3 w-[300px]"
-      variant={messageType as "default" | "destructive" | undefined}
-    >
-      {messageType === "destructive" ? (
-        <ExclamationTriangleIcon className="h-4 w-4" />
-      ) : (
-        <TiTick className="h-6 w-6" />
-      )}
-      <AlertTitle>
-        {messageType === "destructive" ? "Error" : "Success"}
-      </AlertTitle>
-      <AlertDescription className="text-wrap">
-        <p className="text-wrap">{message || "Something went wrong"}</p>
-      </AlertDescription>
-    </Alert>
-  );
-};
+// const FormApiMessage = ({
+//   message,
+//   messageType,
+// }: {
+//   message: string;
+//   messageType: string | undefined;
+// }) => {
+//   // const { toast } = useToast();
+//   console.log("inside the popUP");
+//   return (
+//     <>
+//       {toast({
+//         variant: `${
+//           messageType === "desctructive" ? "destructive" : "success"
+//         }`,
+//         title: `${messageType === "desctructive" ? "Failure " : "Success"}`,
+//         description: `${
+//           message ? message : "Something went wrong. Please try again"
+//         }`,
+//       })}
+//       {toast({
+//         title: "Uh oh! Something went wrong.",
+//         description: "There was a problem with your request.",
+//       })}
+//     </>
+//   );
+// };
 
-export default FormApiMessage;
+// export default FormApiMessage;

@@ -22,7 +22,8 @@ import OtpForm from "./otp-form";
 import { sendOTP } from "@/actions/nodemailer";
 import { verifyOTP } from "@/actions/auth/otp-verify";
 import { useRouter } from "next/navigation";
-import FormApiMessage from "./form-message";
+// import FormApiMessage from "./form-message";
+import { toast } from "@/hooks/use-toast";
 
 const AuthForm = (type: { type: FormType }) => {
   const [openOtpPopUp, setOtpPopUp] = useState(false);
@@ -44,24 +45,59 @@ const AuthForm = (type: { type: FormType }) => {
   });
 
   const handleApiResponseMessages = (message: string, status: number) => {
+    console.log(message, status);
     switch (status) {
       case 200:
-        <FormApiMessage message={message} messageType="outline" />;
+        toast({
+          title: "Invalid Input",
+          description: "Please check your information and try again.",
+          variant: "destructive",
+        });
         break;
       case 201:
-        <FormApiMessage message={message} messageType="outline" />;
+        toast({
+          variant: "success",
+          title: "Success",
+          description: `${
+            message ? message : "Something went wrong. Please try again"
+          }`,
+        });
         break;
       case 400:
-        <FormApiMessage message={message} messageType="destructive" />;
+        toast({
+          variant: "destructive",
+          title: "Failure",
+          description: `${
+            message ? message : "Something went wrong. Please try again"
+          }`,
+        });
         break;
       case 401:
-        <FormApiMessage message={message} messageType="destructive" />;
+        toast({
+          variant: "destructive",
+          title: "Failure",
+          description: `${
+            message ? message : "Something went wrong. Please try again"
+          }`,
+        });
         break;
       case 409:
-        <FormApiMessage message={message} messageType="destructive" />;
+        toast({
+          variant: "destructive",
+          title: "Failure",
+          description: `${
+            message ? message : "Something went wrong. Please try again"
+          }`,
+        });
         break;
       case 500:
-        <FormApiMessage message={message} messageType="destructive" />;
+        toast({
+          variant: "destructive",
+          title: "Failure",
+          description: `${
+            message ? message : "Something went wrong. Please try again"
+          }`,
+        });
         break;
 
       default:
