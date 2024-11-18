@@ -3,86 +3,74 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { connectDB } from "@/config";
 import { User } from "@/models/auth/user";
-import { sendEmail } from "@/utils";
-
-const generateOtp = () => {
-  // Generate a random 6-digit OTP
-  const otp = Math.floor(100000 + Math.random() * 900000);
-  return otp;
-};
+import bcrypt from "bcrypt";
 
 export const createAccount = async (formdata: FormData) => {
   await connectDB();
   try {
-    const fullName = formdata.get("fullName");
-    const email = formdata.get("email");
+    const fullName = formdata.get("fullName") as string;
+    const email = formdata.get("email") as string;
+    const password = formdata.get("password") as string;
 
-    console.log("this is the data", fullName, email);
+    console.log("Received data:", fullName, email);
 
-    if (!email || !fullName) {
+    // Validate input fields
+    if (!email || !fullName || !password) {
       return {
         success: false,
-        message: "All fields are required",
-        status: 400,
+        message: "All fields are required.",
+        status: 400, // Bad Request
       };
     }
 
-    const existingUser = await User.findOne({
-      $or: [{ email }],
-    });
+    // // Check if user already exists
+    // const existingUser = await User.findOne({ email });
+    // if (existingUser) {
+    //   return {
+    //     success: false,
+    //     message: "Email already exists. Please use a different email.",
+    //     status: 409, // Conflict
+    //   };
+    // }
 
-    if (existingUser) {
+    // Encrypt password
+    const saltRounds = 10;
+    const encryptPassword = await bcrypt.hash(password, saltRounds);
+    if (!encryptPassword) {
       return {
         success: false,
-        message: "Email already exists",
-        status: 400,
+        message: "An error occurred while encrypting the password.",
+        status: 500, // Internal Server Error
       };
     }
 
-    const otp = generateOtp();
-
-    const mail = await sendEmail({
-      sender: {
-        name: "Store it",
-        address: "storeit@example.com",
-      },
-      receipients: [{ name: "John Doe", address: email as string }],
-      subject: "OTP verification",
-      message: `<h1>This is your otp:${otp}</h1>`,
-    });
-
-    if (mail.accepted?.length > 0) {
-      return {
-        success: true,
-        message: "Email send successfully",
-        status: 200,
-      };
-    }
+    // Create a new user
     const user = new User({
       fullName,
       email,
+      password: encryptPassword,
     });
 
-    await user.save();
-    if (!user) {
+    const savedUser = await user.save();
+    if (!savedUser) {
       return {
         success: false,
-        message: "Error creating user",
-        status: 500,
+        message: "Failed to create the user. Please try again later.",
+        status: 500, // Internal Server Error
       };
     }
 
     return {
       success: true,
-      message: "User created successfully",
-      status: 201,
+      message: "User created successfully.",
+      status: 201, // Created
     };
   } catch (error) {
-    console.log(error);
+    console.error("Error creating user:", error);
     return {
       success: false,
-      message: "Internal server error",
-      status: 500,
+      message: "Internal server error. Please try again later.",
+      status: 500, // Internal Server Error
     };
   }
 };
