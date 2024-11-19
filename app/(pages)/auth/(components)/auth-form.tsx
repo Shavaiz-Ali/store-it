@@ -24,6 +24,7 @@ import { verifyOTP } from "@/actions/auth/otp-verify";
 import { useRouter } from "next/navigation";
 // import FormApiMessage from "./form-message";
 import { toast } from "@/hooks/use-toast";
+import { Login } from "@/actions/auth/login";
 
 const AuthForm = (type: { type: FormType }) => {
   const [openOtpPopUp, setOtpPopUp] = useState(false);
@@ -49,9 +50,11 @@ const AuthForm = (type: { type: FormType }) => {
     switch (status) {
       case 200:
         toast({
-          title: "Invalid Input",
-          description: "Please check your information and try again.",
-          variant: "destructive",
+          variant: "success",
+          title: "Success",
+          description: `${
+            message ? message : "Something went wrong. Please try again"
+          }`,
         });
         break;
       case 201:
@@ -129,7 +132,7 @@ const AuthForm = (type: { type: FormType }) => {
             createUser?.status as number
           );
           if (createUser?.status === 201) {
-            // router.push("/auth/login");
+            router.push("/auth/login");
           }
         }
       }, 1000);
@@ -160,8 +163,20 @@ const AuthForm = (type: { type: FormType }) => {
           setOTP(otpSend?.otp as number);
           setOtpPopUp(true);
         }
+      } else {
+        setLoading(true);
+        const login = await Login(formData as FormData);
+        handleApiResponseMessages(
+          login?.message as string,
+          login?.status as number
+        );
+        if (login?.status === 200) {
+          setLoading(false);
+          router.push("/dashboard");
+        }
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };

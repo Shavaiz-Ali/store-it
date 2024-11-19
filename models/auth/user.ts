@@ -15,6 +15,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    accessToken: {
+      type: String,
+      default: null,
+      required: false,
+    },
   },
   { timestamps: true }
 );
