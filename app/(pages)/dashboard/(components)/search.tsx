@@ -4,7 +4,7 @@ import React from "react";
 
 const HeaderSearch = () => {
   return (
-    <div className="flex items-start gap-x-[10px] h-[52px] w-[482px] rounded-[30px] p-[16px] shadow-lg shadow-[#5968B20F] border">
+    <div className="flex items-start gap-x-[10px] h-[52px] w-[90%] lg:w-[482px] rounded-[30px] p-[16px] shadow-lg shadow-[#5968B20F] border">
       <Image
         src={"/icons/search.svg"}
         alt=""

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import Typography from "./typography";
 
 const CommonLayout = () => {
   return (
@@ -17,13 +18,19 @@ const CommonLayout = () => {
         className="h-auto"
       />
       <div className="space-y-4">
-        <h1 className="font-[family-name:var(--font-poppins-bold)] text-[46px] leading-[56px] text-[#ffffff] font-[700]">
+        <Typography
+          variant="h1"
+          className="text-[46px] leading-[56px] text-[#ffffff] font-[700]"
+        >
           Manage your files the best way
-        </h1>
-        <p className="text-[16px] leading-[24px] font-[family-name:var(--font-poppins-regular)] text-[#ffffff] font-normal">
+        </Typography>
+        <Typography
+          variant="p"
+          className="text-[16px] leading-[24px] text-[#ffffff]"
+        >
           Awesome, we&apos;ve created the perfect place for you to store all
           your documents.
-        </p>
+        </Typography>
       </div>
       <div className="flex justify-center items-center w-full">
         <Image

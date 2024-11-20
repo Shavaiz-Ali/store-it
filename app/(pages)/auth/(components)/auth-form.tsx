@@ -25,6 +25,7 @@ import { useRouter } from "next/navigation";
 // import FormApiMessage from "./form-message";
 import { toast } from "@/hooks/use-toast";
 import { Login } from "@/actions/auth/login";
+import Typography from "./typography";
 
 const AuthForm = (type: { type: FormType }) => {
   const [openOtpPopUp, setOtpPopUp] = useState(false);
@@ -188,9 +189,12 @@ const AuthForm = (type: { type: FormType }) => {
           className="space-y-3 flex flex-col justify-start w-full"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <h1 className="text-[46px] leading-[56px] font-[family-name:var(--font-poppins-bold)] text-backgroundGrayLight font-[700]">
+          <Typography
+            variant="h1"
+            className="text-[46px] leading-[56px] text-backgroundGrayLight"
+          >
             {type.type === "login" ? "Login" : "Create Account"}
-          </h1>
+          </Typography>
           {type.type === "register" ? (
             <FormField
               control={form.control}
@@ -198,8 +202,10 @@ const AuthForm = (type: { type: FormType }) => {
               render={({ field }) => (
                 <FormItem>
                   <div className="w-full sm:w-[580px] h-[78px] rounded-[12px] p-[16px] space-y-[6px] shadow-md shadow-[#4247611A] border transition peer-focus-within:border-accentRed">
-                    <FormLabel className="text-sm leading-[20px] font-[family-name:var(--font-poppins-regular)] text-backgroundGrayLight font-400">
-                      Full Name
+                    <FormLabel>
+                      <Typography variant="h5" className="">
+                        Full Name
+                      </Typography>
                     </FormLabel>
                     <FormControl>
                       <Input
@@ -225,8 +231,10 @@ const AuthForm = (type: { type: FormType }) => {
             render={({ field }) => (
               <FormItem>
                 <div className="w-full sm:w-[580px] h-[78px] rounded-[12px] p-[16px] space-y-[6px] shadow-md shadow-[#4247611A] border">
-                  <FormLabel className="text-sm leading-[20px] font-[family-name:var(--font-poppins-regular)] text-backgroundGrayLight font-400">
-                    Email
+                  <FormLabel>
+                    <Typography variant="h5" className="">
+                      Email
+                    </Typography>
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -248,8 +256,10 @@ const AuthForm = (type: { type: FormType }) => {
             render={({ field }) => (
               <FormItem>
                 <div className="w-full sm:w-[580px] h-[78px] rounded-[12px] p-[16px] space-y-[6px] shadow-md shadow-[#4247611A] border">
-                  <FormLabel className="text-sm leading-[20px] font-[family-name:var(--font-poppins-regular)] text-backgroundGrayLight font-400">
-                    Password
+                  <FormLabel>
+                    <Typography variant="h5" className="">
+                      Password
+                    </Typography>
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -268,35 +278,42 @@ const AuthForm = (type: { type: FormType }) => {
           {/* submit form button */}
           <Button
             // type="submit"
-            className="w-full sm:w-[580px] h-[66px] rounded-[41px] bg-primaryOrangeLight shadow-md shadow-[#4159D64D] text-[15px] leading-[20px] font-[600] text-center font-[family-name:var(--font-poppins-semibold)] hover:bg-primaryOrangeLight"
+            className="w-full sm:w-[580px] h-[66px] rounded-[41px] bg-primaryOrangeLight shadow-md shadow-[#4159D64D]  hover:bg-primaryOrangeLight"
           >
             {loading && (
               <div className="flex justify-center items-center gap-x-2">
                 <div className="h-4 w-4 rounded-full border border-white border-t-backgroundGrayLight animate-spin" />
               </div>
             )}
-            {type.type === "login" ? "Login" : "Create Account"}
+            <Typography variant="button" className="text-[#ffffff]">
+              {type.type === "login" ? "Login" : "Create Account"}
+            </Typography>
           </Button>
 
-          <div className="flex justify-center items-center gap-x-0.5 text-[14px] leading-[20px] font-[400] font-[family-name:var(--font-poppins-regular)] text-backgroundGrayLight">
-            {type.type === "register" ? (
-              <>
-                <span>Already have an account?</span>
-                <Link className="text-primaryOrangeLight" href={"/auth/login"}>
-                  Login
-                </Link>
-              </>
-            ) : (
-              <>
-                <span>Don&apos;t have an account?</span>
-                <Link
-                  className="text-primaryOrangeLight"
-                  href={"/auth/register"}
-                >
-                  Sign up
-                </Link>
-              </>
-            )}
+          <div className="flex justify-center items-center gap-x-0.5">
+            <Typography variant="h5">
+              {type.type === "register" ? (
+                <>
+                  <span>Already have an account?</span>{" "}
+                  <Link
+                    className="text-primaryOrangeLight"
+                    href={"/auth/login"}
+                  >
+                    Login
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <span>Don&apos;t have an account?</span>{" "}
+                  <Link
+                    className="text-primaryOrangeLight"
+                    href={"/auth/register"}
+                  >
+                    Create account
+                  </Link>
+                </>
+              )}
+            </Typography>
           </div>
         </form>
       </FormProvider>
