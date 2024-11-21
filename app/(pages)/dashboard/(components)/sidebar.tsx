@@ -38,7 +38,7 @@ const DashbaordSideBar = () => {
             className="h-auto"
           />
         </div>
-        <div className="flex justify-center items-center lg:gap-4 w-full lg:bg-[#fff0f1] rounded-full lg:p-2">
+        <div className="flex justify-center items-center lg:gap-2 w-full lg:bg-[#fff0f1] rounded-full lg:p-2">
           <div className="relative size-10 rounded-full overflow-hidden">
             <Image
               src={"/user.webp"}
@@ -51,7 +51,10 @@ const DashbaordSideBar = () => {
             <Typography variant="h5" className="text-[14px] font-[600]">
               Shavaiz Ali
             </Typography>
-            <Typography variant="p" className="text-primaryBlueDark">
+            <Typography
+              variant="p"
+              className="text-[12px] text-primaryBlueDark"
+            >
               hello@example.com
             </Typography>
           </div>

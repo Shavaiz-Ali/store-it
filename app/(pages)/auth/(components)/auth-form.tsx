@@ -115,7 +115,7 @@ const AuthForm = (type: { type: FormType }) => {
     setLoading(true);
     try {
       const otpVerify = await verifyOTP({
-        otp: otp as number,
+        token: otp as number,
         userOTP: userOTP as string,
       });
       handleApiResponseMessages(
@@ -277,8 +277,9 @@ const AuthForm = (type: { type: FormType }) => {
           />
           {/* submit form button */}
           <Button
-            // type="submit"
+            type="submit"
             className="w-full sm:w-[580px] h-[66px] rounded-[41px] bg-primaryOrangeLight shadow-md shadow-[#4159D64D]  hover:bg-primaryOrangeLight"
+            disabled={loading}
           >
             {loading && (
               <div className="flex justify-center items-center gap-x-2">

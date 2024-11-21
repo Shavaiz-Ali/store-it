@@ -11,6 +11,7 @@ export default {
     extend: {
       screens: {
         xs: "400px",
+        xlg: "1440px",
       },
       colors: {
         // Primary colors
