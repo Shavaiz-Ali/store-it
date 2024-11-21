@@ -1,15 +1,27 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderSearch from "./search";
 import DashbaordFileUpload from "./file-upload";
 import DashboardSidebarMobile from "./sidebar-mobile";
 
 const DashboardHeader = () => {
   const [sidebarMobile, setSidebarMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 639) {
+        setSidebarMobile(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
-      <header className="flex justify-between items-center h-[116px] w-full">
+      <header className="flex justify-between items-center h-[116px] w-full lg:gap-4">
         <div className="block sm:hidden">
           <Image
             src={"/icons/logo-full-brand.svg"}
@@ -25,7 +37,7 @@ const DashboardHeader = () => {
         <div className="flex justify-center items-center lg:gap-0 gap-4">
           <DashbaordFileUpload />
           <div
-            className="block sm:hidden"
+            className="block sm:hidden cursor-pointer"
             onClick={() => setSidebarMobile(true)}
           >
             <Image

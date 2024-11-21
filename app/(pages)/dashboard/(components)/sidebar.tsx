@@ -6,7 +6,7 @@ import DashbaordSideBarLinks from "./sidebar-links";
 const DashbaordSideBar = () => {
   // console.lo;
   return (
-    <div className="hidden remove-scrollbar w-[90px] lg:w-[280px] xl:w-[325px] py-[30px] h-screen sm:flex flex-col justify-between items-start overflow-hidden">
+    <div className="w-full h-full sm:flex flex-col justify-between items-start overflow-hidden">
       <div className="flex flex-col  w-full gap-3">
         <div className="flex sm:hidden lg:flex shrink-0 sm:w-[210px]">
           <Image
@@ -29,7 +29,7 @@ const DashbaordSideBar = () => {
         {/* sidebar */}
         <DashbaordSideBarLinks />
       </div>
-      <div className="space-y-4 self-start">
+      <div className="self-start">
         <div className="relative size-20 lg:size-60 ">
           <Image
             src={"/sidebarIllus.svg"}

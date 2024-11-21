@@ -62,7 +62,7 @@ export const Login = async (formData: FormData) => {
     (await cookies()).set("accessToken", accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      maxAge: 15 * 60, // 15 minutes
+      maxAge: 7 * 24 * 60 * 60,
       sameSite: "strict",
       path: "/",
     });

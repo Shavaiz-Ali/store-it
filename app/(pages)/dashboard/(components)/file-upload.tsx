@@ -1,8 +1,11 @@
+import { logout } from "@/actions/auth/logout";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+// import { useRouter } from "next/router";
 import React from "react";
 
 const DashbaordFileUpload = () => {
+  // const router = useRouter();
   return (
     <div className="flex items-center justify-end gap-x-3 xs:gap-x-6 lg:w-full">
       <Button
@@ -18,7 +21,15 @@ const DashbaordFileUpload = () => {
         />
         <span>Upload</span>
       </Button>
-      <Button className="h-12 w-12 hidden rounded-full sm:flex justify-center items-center bg-primaryOrangeLight/10 hover:bg-primaryOrangeLight/20 p-0">
+      <Button
+        className="h-12 w-12 hidden rounded-full sm:flex justify-center items-center bg-primaryOrangeLight/10 hover:bg-primaryOrangeLight/20 p-0"
+        onClick={async () => {
+          const logoutUser = await logout();
+          if (logoutUser?.status === 200) {
+            window.location.href = "/auth/login";
+          }
+        }}
+      >
         <Image
           src={"/icons/logout.svg"}
           alt=""
