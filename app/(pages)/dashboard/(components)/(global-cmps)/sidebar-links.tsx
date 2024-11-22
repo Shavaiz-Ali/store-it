@@ -4,7 +4,7 @@ import { sidebarData } from "@/utils/constants";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import Typography from "../../auth/(components)/typography";
+import Typography from "@/components/typography";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 

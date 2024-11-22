@@ -25,7 +25,7 @@ import { useRouter } from "next/navigation";
 // import FormApiMessage from "./form-message";
 import { toast } from "@/hooks/use-toast";
 import { Login } from "@/actions/auth/login";
-import Typography from "./typography";
+import Typography from "../../../../components/typography";
 
 const AuthForm = (type: { type: FormType }) => {
   const [openOtpPopUp, setOtpPopUp] = useState(false);

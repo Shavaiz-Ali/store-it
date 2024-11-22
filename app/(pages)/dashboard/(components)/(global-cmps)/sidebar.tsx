@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import Typography from "../../auth/(components)/typography";
+import Typography from "../../../../../components/typography";
 import DashbaordSideBarLinks from "./sidebar-links";
 
 const DashbaordSideBar = () => {

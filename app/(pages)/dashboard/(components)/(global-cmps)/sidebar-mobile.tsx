@@ -7,10 +7,10 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import Typography from "../../auth/(components)/typography";
-import DashbaordSideBarLinks from "./sidebar-links";
+import Typography from "../../../../../components/typography";
 import { X } from "lucide-react";
 import { logout } from "@/actions/auth/logout";
+import DashbaordSideBarLinks from "./sidebar-links";
 const DashboardSidebarMobile = ({
   sidebarMobile,
   setSidebarMobile,
@@ -20,7 +20,7 @@ const DashboardSidebarMobile = ({
 }) => {
   return (
     <Sheet open={sidebarMobile} onOpenChange={setSidebarMobile}>
-      <SheetContent className="py-2 px-2 flex flex-col justify-between h-full">
+      <SheetContent className="py-4 px-2 flex flex-col justify-between h-full">
         <SheetHeader>
           <div className="flex justify-between items-center gap-2 w-full bg-[#fff0f1] rounded-full p-2">
             <div className="flex items-center gap-2">

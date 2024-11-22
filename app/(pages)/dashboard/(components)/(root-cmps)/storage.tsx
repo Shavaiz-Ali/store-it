@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardHeader,
 } from "@/components/ui/card";
-import Typography from "../../auth/(components)/typography";
+import Typography from "../../../../../components/typography";
 
 const DashbaordStorage = () => {
   return (

@@ -1,7 +1,7 @@
 import { getUsageSummary } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
-import Typography from "../../auth/(components)/typography";
+import Typography from "../../../../../components/typography";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 
@@ -11,7 +11,7 @@ const DashboardFileTypes = () => {
     <>
       {usageSummary?.map((summary, _) => (
         <Link href={summary.url} key={_}>
-          <div className="relative flex flex-col justify-center items-center gap-y-2 bg-white w-full h-auto py-[50px] rounded-[20px] hover:scale-105 transition-all duration-200">
+          <div className="relative flex flex-col justify-center items-center gap-y-2 bg-white w-full h-auto py-[40px] rounded-[20px] hover:scale-105 transition-all duration-200">
             <div className="absolute top-3 right-3">
               <Typography
                 variant="h4"

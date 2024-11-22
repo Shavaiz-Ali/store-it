@@ -1,6 +1,7 @@
 import React from "react";
-import DashbaordStorage from "./(components)/storage";
-import DashboardFileTypes from "./(components)/file-types";
+import DashbaordStorage from "./(components)/(root-cmps)/storage";
+import DashboardFileTypes from "./(components)/(root-cmps)/file-types";
+import DashboardRecentUploads from "./(components)/(root-cmps)/recent-uploads";
 
 const DashboardPage = () => {
   return (
@@ -11,6 +12,7 @@ const DashboardPage = () => {
           <DashboardFileTypes />
         </div>
       </div>
+      <DashboardRecentUploads />
     </div>
   );
 };
