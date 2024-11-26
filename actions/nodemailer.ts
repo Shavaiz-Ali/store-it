@@ -1,7 +1,7 @@
 "use server";
 
 import { connectDB } from "@/config";
-import { User } from "@/models/auth/user";
+import { User } from "@/models/user/user";
 import { sendEmail } from "@/utils";
 import jwt from "jsonwebtoken";
 
@@ -35,7 +35,7 @@ export const sendOTP = async (formData: FormData) => {
     if (existingUser) {
       return {
         success: false,
-        message: "Email already exists. Please use a different email.",
+        message: "Email already exists. Please login!.",
         status: 409,
       };
     }
@@ -64,12 +64,14 @@ export const sendOTP = async (formData: FormData) => {
     });
 
     if (mail?.accepted?.length > 0) {
-      await jwt.sign({ otp }, "sjldfdsIW65874", { expiresIn: expiryTime });
+      const encryptedOtp = await jwt.sign({ otp }, "sjldfdsIW65874", {
+        expiresIn: expiryTime,
+      });
       return {
         success: true,
         message: "OTP sent successfully to your email.",
         status: 200,
-        otp,
+        otp: encryptedOtp,
       };
     } else {
       return {

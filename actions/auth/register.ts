@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { connectDB } from "@/config";
-import { User } from "@/models/auth/user";
+import { User } from "@/models/user/user";
 import bcrypt from "bcrypt";
 
 export const createAccount = async (formdata: FormData) => {

@@ -7,6 +7,9 @@ import {
   poppinsSemiBold,
   poppinsRegular,
 } from "./fonts";
+import { AuthContextProvider } from "@/context/authContext";
+import { Suspense } from "react";
+import Loader from "./loader";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,7 +26,9 @@ export default function RootLayout({
       <body
         className={`${poppinsBold.variable} ${poppinsSemiBold.variable} ${poppinsMedium.variable} ${poppinsRegular.variable}`}
       >
-        {children}
+        <Suspense fallback={<Loader />}>
+          <AuthContextProvider> {children}</AuthContextProvider>
+        </Suspense>
       </body>
     </html>
   );

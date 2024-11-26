@@ -7,7 +7,9 @@ import DashboardSidebarMobile from "./sidebar-mobile";
 
 const DashboardHeader = () => {
   const [sidebarMobile, setSidebarMobile] = useState(false);
+  // const [files, setFiles] = useState<FileList | null>(null);
 
+  // console.log("selectd files", files);
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 639) {
@@ -18,6 +20,10 @@ const DashboardHeader = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // const handleUploadFiles = (files: FileList | null) => {
+  //   console.log(files);
+  // };
 
   return (
     <>

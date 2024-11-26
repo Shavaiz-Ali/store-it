@@ -33,7 +33,7 @@ const AuthForm = (type: { type: FormType }) => {
   const [loading, setLoading] = useState(false);
   const [userOTP, setUserOTP] = React.useState<string>("");
   const [formData, setFormData] = useState<FormData | undefined>(undefined);
-  const [otp, setOTP] = useState<number | null>(null);
+  const [otp, setOTP] = useState<string | undefined>(undefined);
 
   const router = useRouter();
 
@@ -115,7 +115,7 @@ const AuthForm = (type: { type: FormType }) => {
     setLoading(true);
     try {
       const otpVerify = await verifyOTP({
-        token: otp as number,
+        token: otp as string,
         userOTP: userOTP as string,
       });
       handleApiResponseMessages(
@@ -124,6 +124,7 @@ const AuthForm = (type: { type: FormType }) => {
       );
       setTimeout(async () => {
         if (otpVerify?.status === 200) {
+          alert("verified");
           setUserOTP("");
           setOtpPopUp(false);
           setLoading(false);
@@ -135,9 +136,11 @@ const AuthForm = (type: { type: FormType }) => {
           if (createUser?.status === 201) {
             router.push("/auth/login");
           }
+          setLoading(false);
         }
       }, 1000);
     } catch (error) {
+      setLoading(false);
       console.log(error);
       throw new Error(error as any);
     }
@@ -161,9 +164,10 @@ const AuthForm = (type: { type: FormType }) => {
         );
         if (otpSend?.status === 200) {
           setLoading(false);
-          setOTP(otpSend?.otp as number);
+          setOTP(otpSend?.otp as string | undefined);
           setOtpPopUp(true);
         }
+        setLoading(false);
       } else {
         setLoading(true);
         const login = await Login(formData as FormData);
@@ -173,8 +177,10 @@ const AuthForm = (type: { type: FormType }) => {
         );
         if (login?.status === 200) {
           setLoading(false);
-          router.push("/dashboard");
+          window.location.href = "/dashboard";
         }
+
+        setLoading(false);
       }
     } catch (error) {
       setLoading(false);

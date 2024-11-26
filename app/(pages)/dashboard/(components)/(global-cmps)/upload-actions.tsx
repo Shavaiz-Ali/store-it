@@ -51,7 +51,7 @@ const DashboardUploadActions = () => {
       />
       <DropdownMenu open={options} onOpenChange={setOptions}>
         <DropdownMenuTrigger></DropdownMenuTrigger>
-        <DropdownMenuContent className="-top-4 -left-[170px] w-[180px]">
+        <DropdownMenuContent className="w-[180px]">
           <DropdownMenuLabel>Title</DropdownMenuLabel>
           <DropdownMenuSeparator />
           {/* <div className="flex"></div> */}
@@ -60,9 +60,13 @@ const DashboardUploadActions = () => {
               key={index}
               className="flex justify-start items-center gap-x-2 cursor-pointer"
               onClick={() => {
-                setAction(option.name);
-                setOpenDialog(true);
-                setOptions(false);
+                if (option.name === "Download") {
+                  setOptions(false);
+                } else {
+                  setAction(option.name);
+                  setOpenDialog(true);
+                  setOptions(false);
+                }
               }}
             >
               <Image

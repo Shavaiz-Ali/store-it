@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import jwt from "jsonwebtoken";
-
+import { jwtDecode } from "jwt-decode";
 export const verifyOTP = async ({
   token,
   userOTP,
 }: {
-  token: number;
+  token: string;
   userOTP: string;
 }) => {
   if (!token || !userOTP) {
@@ -17,12 +16,10 @@ export const verifyOTP = async ({
   }
 
   try {
-    const otp: string = token.toString();
-    const decoded = jwt.verify(otp, "sjldfdsIW65874") as unknown as {
-      otp: number;
-    };
+    // const otp: string = token.toString();
+    const decodedToken = jwtDecode<{ otp: string; exp: number }>(token as any);
 
-    if (decoded.otp.toString().trim() === userOTP.toString().trim()) {
+    if (decodedToken.otp.toString().trim() === userOTP.toString().trim()) {
       return {
         success: true,
         message: "OTP verified successfully!",

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import DashboardHeader from "./(components)/(global-cmps)/header";
 import Wrapper from "./(components)/(global-cmps)/wrapper";
 import DashbaordSideBar from "./(components)/(global-cmps)/sidebar";
+// import { AuthContextProvider } from "@/context/authContext";
 
 export const metadata: Metadata = {
   title: "Dashbaord",

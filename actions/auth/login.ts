@@ -1,6 +1,6 @@
 "use server";
 
-import { User } from "@/models/auth/user";
+import { User } from "@/models/user/user";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { cookies } from "next/headers"; // For managing cookies in Next.js server actions
