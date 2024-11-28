@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
-const othersSchema = new mongoose.Schema(
+const documentSchema = new mongoose.Schema(
   {
     url: {
-      type: [String],
+      type: String,
       required: true,
     },
     filename: {
@@ -22,5 +22,6 @@ const othersSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Other = mongoose.model("Other", othersSchema);
-export { Other };
+const Document =
+  mongoose.models.Document || mongoose.model("Document", documentSchema);
+export { Document };

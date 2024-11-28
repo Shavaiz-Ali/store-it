@@ -5,46 +5,41 @@ export function middleware(request: NextRequest) {
   const accessToken = request.cookies.get("accessToken")?.value;
   const { pathname } = request.nextUrl;
 
-  // Paths to exclude from middleware
+  // Excluded paths (Regex for broader matching)
   const publicPaths = [
-    "/_next/static",
-    "/_next/image",
-    "/favicon.ico",
-    "/api/",
-    "/images/",
+    /^\/_next\/static/,
+    /^\/_next\/image/,
+    /^\/favicon\.ico$/,
+    /^\/api\//,
+    /^\/images\//,
   ];
 
-  // Check if the current path should be excluded
-  const isExcludedPath = publicPaths.some((path) => pathname.startsWith(path));
+  const isExcludedPath = publicPaths.some((regex) => regex.test(pathname));
 
-  // Define route types
-  const isAuthPath = pathname.startsWith("/auth");
-  const isDashboardPath = pathname.startsWith("/dashboard");
+  // Define route types with precise matching
+  const isAuthPath = pathname === "/auth" || pathname.startsWith("/auth/");
+  const isDashboardPath =
+    pathname === "/dashboard" || pathname.startsWith("/dashboard/");
   const isHomePath = pathname === "/";
 
-  // If excluded path, continue without middleware
-  if (isExcludedPath) {
-    return NextResponse.next();
-  }
+  // Exclude static and API paths from middleware
+  if (isExcludedPath) return NextResponse.next();
 
-  // Redirect unauthenticated users from dashboard or home to login
-  if (
-    (!accessToken && (isDashboardPath || isHomePath)) ||
-    (isDashboardPath && !accessToken)
-  ) {
+  // Redirect unauthenticated users to login
+  if (!accessToken && (isDashboardPath || isHomePath)) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 
-  // Redirect authenticated users from auth routes to dashboard
+  // Redirect authenticated users away from auth routes
   if (accessToken && (isAuthPath || isHomePath)) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
-  // Continue with the request for other routes
+  // Continue with the request
   return NextResponse.next();
 }
 
-// Specify which routes this middleware should run on
+// Refine matcher to reduce unnecessary middleware calls
 export const config = {
   matcher: ["/", "/auth/:path*", "/dashboard/:path*"],
 };

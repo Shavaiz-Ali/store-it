@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { logout } from "@/actions/auth/logout";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,11 @@ import { useToast } from "@/hooks/use-toast";
 import { usePathname } from "next/navigation";
 import { uploadImageToCloudinary } from "@/actions/cloudinary/upload-image";
 import { useAuthContext } from "@/context/authContext";
+import { uploadVideoToCloudinary } from "@/actions/cloudinary/upload-video";
+import { uploadRawToCloudinary } from "@/actions/cloudinary/upload-raw";
+import Typography from "@/components/typography";
+import { X } from "lucide-react";
+import { getFileIcon, getFileType } from "@/lib/utils";
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024;
 
@@ -18,6 +24,7 @@ const DashbaordFileUpload = () => {
   const { toast } = useToast();
   const path = usePathname();
   const [files, setFiles] = useState<File[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
 
   const { user } = useAuthContext();
   const userId = user?._id as string;
@@ -35,6 +42,7 @@ const DashbaordFileUpload = () => {
             prevFiles.filter((f) => f.name !== file.name)
           );
 
+          alert("max file size exceeded");
           return toast({
             description: (
               <p className="body-2 text-white">
@@ -47,44 +55,77 @@ const DashbaordFileUpload = () => {
         }
         const formdata = new FormData();
         try {
+          if (!userId) alert("Access denied! userId is missing");
           if (file.type.startsWith("image") || file.type.includes("image")) {
             alert(`reached to image upload ${file.type}`);
             formdata.append("file", file);
+            setIsUploading(true);
             return await uploadImageToCloudinary({
               formdata,
               path,
-              userId: userId,
+              id: userId as string,
             }).then((uploadedFile) => {
-              // if (uploadedFile) {
-              //   setFiles((prevFiles) =>
-              //     prevFiles.filter((f) => f.name !== file.name)
-              //   );
-              // }
-              console.log(uploadedFile);
+              if (uploadedFile) {
+                setFiles((prevFiles) =>
+                  prevFiles.filter((f) => f.name !== file.name)
+                );
+              }
+              setIsUploading(false);
+              console.log("image uploaded", uploadedFile);
             });
           } else if (
             file.type.startsWith("video") ||
             file.type.includes("video")
           ) {
-            // return uploadFile({ file, path }).then((uploadedFile) => {
-            //   if (uploadedFile) {
-            //     setFiles((prevFiles) =>
-            //       prevFiles.filter((f) => f.name !== file.name)
-            //     );
-            //   }
-            // });
+            formdata.append("file", file);
+            setIsUploading(true);
+            return await uploadVideoToCloudinary({
+              id: userId as string,
+              formdata,
+              path,
+            }).then((uploadedFile) => {
+              if (uploadedFile) {
+                setFiles((prevFiles) =>
+                  prevFiles.filter((f) => f.name !== file.name)
+                );
+              }
+              setIsUploading(false);
+              console.log("video uploaded", uploadedFile);
+            });
+          } else {
+            formdata.append("file", file);
+            setIsUploading(true);
+            return await uploadRawToCloudinary({
+              id: userId as string,
+              formdata,
+              path,
+            }).then((uploadedFile) => {
+              if (uploadedFile) {
+                setFiles((prevFiles) =>
+                  prevFiles.filter((f) => f.name !== file.name)
+                );
+              }
+              setIsUploading(false);
+              console.log("document uploadded", uploadedFile);
+            });
           }
         } catch (error) {
+          setIsUploading(false);
           console.log(error);
         }
       });
 
       await Promise.all(uploadPromises);
     },
-    [path]
+    [path, userId]
   );
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
+  // if (isUploading) {
+  //   alert("uploading...");
+  // }
+
   return (
     <div
       {...getRootProps()}
@@ -130,6 +171,38 @@ const DashbaordFileUpload = () => {
         />
         {/* <span>Search</span> */}
       </Button>
+
+      {files && files.length > 0 && (
+        <div className="absolute bottom-12 right-7 bg-white border flex flex-col items-start gap-y-2 w-[280px] h-auto px-3 py-5 z-[99999999] rounded-[8px]">
+          <Typography variant="h2">Uploading</Typography>
+          {files.map((file) => {
+            const { type, extension } = getFileType(file.name);
+            return (
+              <div
+                className="flex justify-between items-center w-full"
+                key={Math.random()}
+              >
+                <div className="flex justify-center items-center gap-x-2">
+                  <div className="relative size-10 overflow-hidden rounded-full flex justify-center items-center">
+                    <Image
+                      src={getFileIcon(extension, type)}
+                      alt=""
+                      fill
+                      className=" h-auto rounded-full "
+                      priority={false}
+                    />
+                  </div>
+                  <Typography variant="p">{file.name}</Typography>
+                </div>
+                <div className="size-6 rounded-full flex justify-center items-center bg-gray-300 cursor-pointer">
+                  <X size={14} className="text-white" />
+                </div>
+              </div>
+            );
+          })}
+          {/* ))} */}
+        </div>
+      )}
     </div>
   );
 };

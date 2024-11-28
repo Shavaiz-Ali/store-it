@@ -15,30 +15,27 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    images: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Image",
-      required: false,
-    },
-    videos: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "video",
-      required: false,
-    },
-    documents: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "document",
-      required: false,
-    },
-    others: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "other",
-      required: false,
-    },
+    images: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Image",
+      },
+    ],
+    videos: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Video",
+      },
+    ],
+    documents: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Document",
+      },
+    ],
     accessToken: {
       type: String,
       default: null,
-      required: false,
     },
   },
   { timestamps: true }

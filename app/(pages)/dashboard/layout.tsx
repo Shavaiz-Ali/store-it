@@ -5,7 +5,7 @@ import DashbaordSideBar from "./(components)/(global-cmps)/sidebar";
 // import { AuthContextProvider } from "@/context/authContext";
 
 export const metadata: Metadata = {
-  title: "Dashbaord",
+  title: "Dashboard",
   description: "Dashboard",
 };
 
@@ -23,7 +23,7 @@ export default function DashboardLayout({
       </div>
       <div className="w-full flex-1 flex flex-col">
         <DashboardHeader />
-        <div className="h-[calc(100vh-150px)] w-full remove-scrollbar overflow-auto bg-[#f2f4f8] mb-7 rounded-[30px] px-3 py-5 sm:px-9 sm:py-10 xs:px-5 xs:py-7 md:mb-7 ">
+        <div className="relative h-[calc(100vh-150px)] w-full remove-scrollbar overflow-auto bg-[#f2f4f8] mb-7 rounded-[30px] px-3 py-5 sm:px-9 sm:py-10 xs:px-5 xs:py-7 md:mb-7 ">
           {children}
         </div>
       </div>

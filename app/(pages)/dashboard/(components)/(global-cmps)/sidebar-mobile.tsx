@@ -69,7 +69,7 @@ const DashboardSidebarMobile = ({
               width={24}
               className="h-auto"
             />
-            <Typography variant="button" className="text-primaryOrangeLight">
+            <Typography variant="p" className="text-primaryOrangeLight">
               Logout
             </Typography>
           </Button>

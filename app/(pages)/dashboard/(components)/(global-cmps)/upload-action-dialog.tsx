@@ -42,21 +42,19 @@ const DashboardUploadActionsDialog = ({
         >
           <X size={20} className="" />
         </div>
+        <DialogTitle className="text-center text-backgroundGrayLight font-[family-name:var(--font-poppins-medium)] text-[20px] leading-7  font-semibold`">
+          {/* <Typography variant="h3" className=""> */}
+          {action}
+          {/* </Typography> */}
+        </DialogTitle>
         <DialogHeader>
-          <DialogTitle className="text-center">
-            <Typography variant="h3" className="font-semibold leading-[26px]">
-              {action}
-            </Typography>
-          </DialogTitle>
           {action === "Delete" && (
-            <DialogDescription className="text-center">
-              <Typography variant="p" className="font-medium">
-                Are you sure you want to delete this{" "}
-                <span className="text-primaryOrangeLight">
-                  DevOverflow Intro.mp4
-                </span>
-                ?
-              </Typography>
+            <DialogDescription className="text-backgroundGrayLight text-center font-[family-name:var(--font-poppins-regular)]  text-[14px] leading-[16px] font-[400]">
+              Are you sure you want to delete this{" "}
+              <span className="text-primaryOrangeLight">
+                DevOverflow Intro.mp4
+              </span>
+              ?
             </DialogDescription>
           )}
           {action === "Rename" && (
@@ -64,6 +62,7 @@ const DashboardUploadActionsDialog = ({
               className="peer w-full border !py-3 !px-2 shadow-none placeholder:text-light-200 outline-none focus-visible:border-black ring-offset-transparent focus:ring-transparent focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-transparent focus-visible:ring-offset-2 text-backgroundGrayDark font-[family-name:var(--font-poppins-semibold)] text-sm leading-5 focus:text-backgroundGrayLight focus:font-[600] focus:placeholder:font-[400] focus:placeholder:text-backgroundGrayDark"
               value={"DevOverflow Intro.mp4"}
               type="text"
+              onChange={() => {}}
             />
           )}
           {action === "Share" && (

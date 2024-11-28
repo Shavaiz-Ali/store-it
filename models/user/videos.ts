@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const videosSchema = new mongoose.Schema(
   {
     url: {
-      type: [String],
+      type: String,
       required: true,
     },
     filename: {
@@ -22,5 +22,5 @@ const videosSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Video = mongoose.model("Video", videosSchema);
+const Video = mongoose.models.Video || mongoose.model("Video", videosSchema);
 export { Video };
