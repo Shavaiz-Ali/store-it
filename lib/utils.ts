@@ -232,3 +232,112 @@ export const getFileTypesParams = (type: string) => {
       return ["document"];
   }
 };
+
+export const getColor = (
+  extension: string | undefined,
+  type: FileType | string
+) => {
+  switch (extension) {
+    // Document
+    case "pdf":
+      return "#EEA8FD";
+    case "doc":
+      return "##EEA8FD";
+    case "docx":
+      return "##EEA8FD";
+    // Image
+    case "svg":
+      return "/icons/file-image.svg";
+
+    default:
+      switch (type) {
+        case "image":
+          return "#56B8FF";
+        case "document":
+          return "#FF7474";
+        case "video":
+          return "#3DD9B3";
+        case "audio":
+          return "#3DD9B3";
+        default:
+          return "#FF7474";
+      }
+  }
+};
+
+export const getFileMainIcon = (
+  extension: string | undefined,
+  type: FileType | string
+) => {
+  switch (extension) {
+    // Document
+    case "pdf":
+      return "/icons/Folder.svg";
+    case "doc":
+      return "/icons/Folder.svg";
+    case "docx":
+      return "/icons/Folder.svg";
+    case "csv":
+      return "/icons/Other.svg";
+    case "txt":
+      return "/icons/Other.svg";
+    case "xls":
+    case "xlsx":
+      return "/icons/Other.svg";
+    // Image
+    case "svg":
+      return "/icons/Image.svg";
+    // Video
+    case "mkv":
+    case "mov":
+    case "avi":
+    case "wmv":
+    case "mp4":
+    case "flv":
+    case "webm":
+    case "m4v":
+    case "3gp":
+      return "/icons/Video.svg";
+    // Audio
+    case "mp3":
+    case "mpeg":
+    case "wav":
+    case "aac":
+    case "flac":
+    case "ogg":
+    case "wma":
+    case "m4a":
+    case "aiff":
+    case "alac":
+      return "/icons/Video.svg";
+
+    default:
+      switch (type) {
+        case "image":
+          return "/icons/Video.svg";
+        case "document":
+          return "/icons/Folder.svg";
+        case "video":
+          return "/icons/Video.svg";
+        case "audio":
+          return "/icons/Video.svg";
+        default:
+          return "/icons/Image.svg";
+      }
+  }
+};
+
+export const getFileUrl = (type: FileType) => {
+  switch (type) {
+    case "image":
+      return "/dashboard/images";
+    case "document":
+      return "/dashboard/documents";
+    case "video":
+      return "/dashboard/media";
+    case "audio":
+      return "/dashbaord/media";
+    default:
+      return "/dashboard/others";
+  }
+};

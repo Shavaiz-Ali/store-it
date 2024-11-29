@@ -127,8 +127,8 @@ export const uploadVideoToCloudinary = async ({
       return { success: false, message: "Error updating user", status: 500 };
     }
 
-    console.log(path);
-    revalidatePath(path);
+    console.log("path to revalidate", path);
+    revalidatePath(path && "/");
 
     return {
       success: true,

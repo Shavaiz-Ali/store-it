@@ -7,7 +7,6 @@ import {
   poppinsSemiBold,
   poppinsRegular,
 } from "./fonts";
-import { AuthContextProvider } from "@/context/authContext";
 import { Suspense } from "react";
 import Loader from "./loader";
 
@@ -26,9 +25,7 @@ export default function RootLayout({
       <body
         className={`${poppinsBold.variable} ${poppinsSemiBold.variable} ${poppinsMedium.variable} ${poppinsRegular.variable}`}
       >
-        <Suspense fallback={<Loader />}>
-          <AuthContextProvider> {children}</AuthContextProvider>
-        </Suspense>
+        <Suspense fallback={<Loader />}>{children}</Suspense>
       </body>
     </html>
   );

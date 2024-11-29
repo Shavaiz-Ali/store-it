@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { logout } from "@/actions/auth/logout";
@@ -5,18 +6,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
-// import { useRouter } from "next/router";
 import { useDropzone } from "react-dropzone";
 import React, { useCallback, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { usePathname } from "next/navigation";
 import { uploadImageToCloudinary } from "@/actions/cloudinary/upload-image";
-import { useAuthContext } from "@/context/authContext";
 import { uploadVideoToCloudinary } from "@/actions/cloudinary/upload-video";
 import { uploadRawToCloudinary } from "@/actions/cloudinary/upload-raw";
 import Typography from "@/components/typography";
 import { X } from "lucide-react";
 import { getFileIcon, getFileType } from "@/lib/utils";
+import { loggedInUser } from "@/actions/auth/me";
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024;
 
@@ -25,8 +25,23 @@ const DashbaordFileUpload = () => {
   const path = usePathname();
   const [files, setFiles] = useState<File[]>([]);
   const [isUploading, setIsUploading] = useState(false);
+  let user: null | any = null;
+  const fetchUser = async () => {
+    await loggedInUser()
+      .then((result) => (user = result?.user))
+      .catch((error) => {
+        console.error("Error fetching user:", error);
+        throw new Error(error);
+      });
 
-  const { user } = useAuthContext();
+    return user;
+  };
+
+  (async () => {
+    const user = await fetchUser();
+    console.log("Resolved User:", user);
+  })();
+
   const userId = user?._id as string;
 
   console.log(userId);
@@ -90,7 +105,6 @@ const DashbaordFileUpload = () => {
                 );
               }
               setIsUploading(false);
-              console.log("video uploaded", uploadedFile);
             });
           } else {
             formdata.append("file", file);

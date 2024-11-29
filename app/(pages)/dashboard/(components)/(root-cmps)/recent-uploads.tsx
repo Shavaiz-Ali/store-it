@@ -1,46 +1,80 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// "use client";
+
 import React from "react";
 import Typography from "../../../../../components/typography";
 import Image from "next/image";
 import DashboardUploadActions from "../(global-cmps)/upload-actions";
+// import { useAuthContext } from "@/context/authContext";
+import {
+  cn,
+  formatDateTime,
+  getColor,
+  getFileMainIcon,
+  getFileType,
+  getFileUrl,
+} from "@/lib/utils";
+import Link from "next/link";
+import { loggedInUser } from "@/actions/auth/me";
+// import { getFileType } from "@/lib/utils";
 
-const DashboardRecentUploads = () => {
+const DashboardRecentUploads = async () => {
+  const user = await loggedInUser();
+  const userUploads = user?.user;
   return (
     <div className="w-full h-full bg-white rounded-[20px] py-6 px-4 sm:px-7 space-y-[28px]">
       <Typography variant="h2" className="font-bold text-[18px] sm:text-[24px]">
         Recent files uploaded
       </Typography>
-      {Array.from({ length: 5 }).map(() => (
-        <div
-          className="flex justify-between items-center w-full gap-x-2"
-          key={Math.random()}
-        >
-          <div className="flex justify-center items-center gap-x-2">
-            <div className="relative size-12 rounded-full overflow-hidden bg-blue-600 flex justify-center items-center">
-              <Image
-                src={"/icons/Video.svg"}
-                alt="image"
-                width={20}
-                height={20}
-              />
-            </div>
-            <div className="flex flex-col justify-between">
-              <Typography
-                variant="p"
-                className="text-[14px] font-semibold leading-[20px] line-clamp-1"
+      {userUploads &&
+      userUploads?.recentUploads &&
+      userUploads?.recentUploads?.length > 0
+        ? userUploads?.recentUploads.map((recent: any) => {
+            const { type, extension } = getFileType(recent?.filename);
+            const color = getColor(extension, type);
+            const url = getFileUrl(type);
+            return (
+              <div
+                className="flex justify-between items-center w-full gap-x-2"
+                key={Math.random()}
               >
-                DevOverflow Intro.mp4
-              </Typography>
-              <Typography
-                variant="p"
-                className="text-[12px] font-medium leading-[20px] text-[#A3B2C7]"
-              >
-                01:56pm, 04 Nov
-              </Typography>
-            </div>
-          </div>{" "}
-          <DashboardUploadActions />
-        </div>
-      ))}
+                <Link
+                  href={url}
+                  className="flex justify-center items-center gap-x-2"
+                >
+                  <div
+                    className={cn(
+                      "relative size-12 rounded-full overflow-hidden bg-blue-600 flex justify-center items-center"
+                    )}
+                    style={{ backgroundColor: `${color}` }}
+                  >
+                    <Image
+                      src={getFileMainIcon(extension, type)}
+                      alt="image"
+                      width={20}
+                      height={20}
+                    />
+                  </div>
+                  <div className="flex flex-col justify-between">
+                    <Typography
+                      variant="p"
+                      className="text-[14px] font-semibold leading-[20px] line-clamp-1"
+                    >
+                      {recent.filename}
+                    </Typography>
+                    <Typography
+                      variant="p"
+                      className="text-[12px] font-medium leading-[20px] text-[#A3B2C7]"
+                    >
+                      {formatDateTime(recent?.createdAt)}
+                    </Typography>
+                  </div>
+                </Link>{" "}
+                <DashboardUploadActions />
+              </div>
+            );
+          })
+        : null}
     </div>
   );
 };
