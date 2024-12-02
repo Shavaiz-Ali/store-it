@@ -27,7 +27,7 @@ export const loggedInUser = async () => {
     }
 
     const userId = decodedToken.userId;
-    console.log("Decoded User ID:", userId);
+    // console.log("Decoded User ID:", userId);
 
     const user = await User.aggregate([
       { $match: { _id: new mongoose.Types.ObjectId(userId) } },
@@ -98,7 +98,7 @@ export const loggedInUser = async () => {
         (a, b) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       )
-      .slice(0, 10); // Limit to the 10 most recent uploads
+      .slice(0, 7); // Limit to the 10 most recent uploads
 
     // Serialize the user data
     const serializedUser = {

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { DashbaordChart } from "./chart";
 import {
@@ -8,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import Typography from "../../../../../components/typography";
 
-const DashbaordStorage = () => {
+const DashbaordStorage = ({ userDetails }: { userDetails: any }) => {
   return (
     <div className="w-full h-auto rounded-[20px] bg-primaryOrangeLight shadow-lg shadow-[#4159D64D] p-2 flex justify-center items-center">
       <Card className="border-0 bg-transparent p-0">

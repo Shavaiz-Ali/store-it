@@ -1,12 +1,24 @@
-import { getUsageSummary } from "@/lib/utils";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { convertFileSize, getUsageSummary } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 import Typography from "../../../../../components/typography";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
+import { getFilesSize } from "@/actions/file-size";
 
-const DashboardFileTypes = () => {
+const DashboardFileTypes = async ({ userDetails }: { userDetails: any }) => {
   const usageSummary = getUsageSummary();
+
+  const usedStorage = async (type: string) => {
+    const size = await getFilesSize({ type: type });
+
+    if (size) {
+      return convertFileSize(size);
+    }
+    return convertFileSize(0);
+  };
   return (
     <>
       {usageSummary?.map((summary, _) => (
@@ -17,7 +29,8 @@ const DashboardFileTypes = () => {
                 variant="h4"
                 className="font-[500] text-[18px] leading-6 "
               >
-                10 GB
+                {/* 2GB */}
+                {usedStorage(summary?.type)}
               </Typography>
             </div>
             <div

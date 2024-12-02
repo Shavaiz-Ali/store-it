@@ -187,6 +187,7 @@ export const getUsageSummary = (totalSpace?: any) => {
       icon: "/icons/Folder.svg",
       url: "/dashboard/documents",
       color: "#FF7474",
+      type: "documents",
     },
     {
       title: "Images",
@@ -195,6 +196,7 @@ export const getUsageSummary = (totalSpace?: any) => {
       icon: "/icons/Image.svg",
       url: "/dashboard/images",
       color: "#56B8FF",
+      type: "images",
     },
     {
       title: "Media",
@@ -206,6 +208,7 @@ export const getUsageSummary = (totalSpace?: any) => {
       icon: "/icons/Video.svg",
       url: "/dashboard/media",
       color: "#3DD9B3",
+      type: "videos",
     },
     {
       title: "Others",
@@ -214,6 +217,7 @@ export const getUsageSummary = (totalSpace?: any) => {
       icon: "/icons/Other.svg",
       url: "/dashboard/others",
       color: "#EEA8FD",
+      type: "documents",
     },
   ];
 };

@@ -20,29 +20,29 @@ import { loggedInUser } from "@/actions/auth/me";
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024;
 
-const DashbaordFileUpload = () => {
+const DashbaordFileUpload = ({ userId }: { userId: string | any }) => {
   const { toast } = useToast();
   const path = usePathname();
   const [files, setFiles] = useState<File[]>([]);
   const [isUploading, setIsUploading] = useState(false);
-  let user: null | any = null;
-  const fetchUser = async () => {
-    await loggedInUser()
-      .then((result) => (user = result?.user))
-      .catch((error) => {
-        console.error("Error fetching user:", error);
-        throw new Error(error);
-      });
+  // let user: null | any = null;
+  // const fetchUser = async () => {
+  //   await loggedInUser()
+  //     .then((result) => (user = result?.user))
+  //     .catch((error) => {
+  //       console.error("Error fetching user:", error);
+  //       throw new Error(error);
+  //     });
 
-    return user;
-  };
+  //   return user;
+  // };
 
-  (async () => {
-    const user = await fetchUser();
-    console.log("Resolved User:", user);
-  })();
+  // (async () => {
+  //   const user = await fetchUser();
+  //   console.log("Resolved User:", user);
+  // })();
 
-  const userId = user?._id as string;
+  // const userId = user?._id as string;
 
   console.log(userId);
 

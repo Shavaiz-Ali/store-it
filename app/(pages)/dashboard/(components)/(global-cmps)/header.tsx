@@ -1,13 +1,27 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import HeaderSearch from "./search";
 import DashbaordFileUpload from "./file-upload";
 import DashboardSidebarMobile from "./sidebar-mobile";
+import { loggedInUser } from "@/actions/auth/me";
 
 const DashboardHeader = () => {
   const [sidebarMobile, setSidebarMobile] = useState(false);
   // const [files, setFiles] = useState<FileList | null>(null);
+  const [user, setUser] = useState<null | any>(null);
+
+  const fetchUser = async () => {
+    await loggedInUser()
+      .then((result) => setUser(result?.user))
+      .catch((error) => {
+        console.error("Error fetching user:", error);
+        throw new Error(error);
+      });
+
+    return user;
+  };
 
   // console.log("selectd files", files);
   useEffect(() => {
@@ -25,6 +39,10 @@ const DashboardHeader = () => {
   //   console.log(files);
   // };
 
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
     <>
       <header className="flex justify-between items-center h-[116px] w-full lg:gap-4">
@@ -41,7 +59,7 @@ const DashboardHeader = () => {
           <HeaderSearch />
         </div>
         <div className="flex justify-center items-center lg:gap-0 gap-4">
-          <DashbaordFileUpload />
+          <DashbaordFileUpload userId={user && user?._id} />
           <div
             className="block sm:hidden cursor-pointer"
             onClick={() => setSidebarMobile(true)}
