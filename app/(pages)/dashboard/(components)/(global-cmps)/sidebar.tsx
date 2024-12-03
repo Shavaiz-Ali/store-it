@@ -15,6 +15,7 @@ const DashbaordSideBar = () => {
             height={52}
             width={161}
             className="h-auto hidden sm:block"
+            priority={false}
           />
         </div>
         <div className="hidden sm:flex lg:hidden">
@@ -24,6 +25,7 @@ const DashbaordSideBar = () => {
             height={52}
             width={52}
             className="h-auto"
+            priority={false}
           />
         </div>
         {/* sidebar */}
@@ -45,6 +47,7 @@ const DashbaordSideBar = () => {
               alt=""
               fill
               className="rounded-full w-full h-full"
+              priority={false}
             />
           </div>
           <div className="hidden lg:flex flex-col justify-between items-start">

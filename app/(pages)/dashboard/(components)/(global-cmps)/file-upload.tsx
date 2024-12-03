@@ -163,7 +163,7 @@ const DashbaordFileUpload = ({ userId }: { userId: string | any }) => {
             />
             Upload
           </Label>
-          <Input {...getInputProps()} />
+          <Input type="" {...getInputProps()} />
         </form>
         {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer w-[120px]"></div> */}
       </Button>
