@@ -12,14 +12,6 @@ const DashboardDocuments = async () => {
 
   const documents = user && user?.user && user?.user?.documents;
 
-  if (!documents || documents?.length < 1) {
-    return (
-      <Typography variant="h2">
-        You haven`&lsquo;t uploaded any documents yet.
-      </Typography>
-    );
-  }
-
   const documentExtensions = [
     "pdf",
     "doc",
@@ -54,13 +46,23 @@ const DashboardDocuments = async () => {
 
   console.log(user);
 
+  if (!documents || documents?.length < 1) {
+    return (
+      <Typography variant="h2">
+        You haven`&lsquo;t uploaded any documents yet.
+      </Typography>
+    );
+  }
+
   return (
     <div>
       <ListFilesCard
         user={documents?.filter((document: any) => {
           const fileExtension = getFileExtension(document.filename);
-          return documentExtensions.includes(fileExtension); // Show only matching extensions
+          return documentExtensions.includes(fileExtension);
         })}
+        userId={user?.user?._id}
+        filetype="documents"
       />
     </div>
   );

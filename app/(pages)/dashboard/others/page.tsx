@@ -61,6 +61,8 @@ const DashbaordOthers = async () => {
           const fileExtension = getFileExtension(document.filename);
           return !documentExtensions.includes(fileExtension); // Show only matching extensions
         })}
+        userId={user?.user?._id}
+        filetype="documents"
       />
     </div>
   );

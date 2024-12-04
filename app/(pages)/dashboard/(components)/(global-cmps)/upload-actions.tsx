@@ -12,11 +12,22 @@ import {
 import Image from "next/image";
 import Typography from "@/components/typography";
 import DashboardUploadActionsDialog from "./upload-action-dialog";
+import { deleteFile } from "@/actions/dashboard/delete-file";
+import { usePathname } from "next/navigation";
 
-const DashboardUploadActions = () => {
+const DashboardUploadActions = ({
+  fileType,
+  fileId,
+  userId,
+}: {
+  fileType: string;
+  fileId: string;
+  userId: string;
+}) => {
   const [options, setOptions] = useState<boolean>(false);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [action, setAction] = useState<string>("");
+  const pathname = usePathname();
   const optionsData = [
     {
       name: "Rename",
@@ -39,6 +50,24 @@ const DashboardUploadActions = () => {
       icon: "/icons/delete.svg",
     },
   ];
+
+  const handleActions = (actionType: string) => {
+    if (actionType === "Delete") {
+      deleteFile({ fileType, fileId, userId, pathname })
+        .then((data) => {
+          if (data?.status === 200) {
+            alert("file deleted successfully!");
+          }
+        })
+        .catch((err) => {
+          setOpenDialog(false);
+          console.log(err);
+        })
+        .finally(() => {
+          setOpenDialog(false);
+        });
+    }
+  };
   return (
     <div>
       <Image
@@ -87,6 +116,7 @@ const DashboardUploadActions = () => {
           action={action}
           openDialog={openDialog}
           setOpenDialog={setOpenDialog}
+          handleActions={handleActions}
         />
       )}
     </div>

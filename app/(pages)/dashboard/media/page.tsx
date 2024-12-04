@@ -23,7 +23,7 @@ const DashboardImages = async () => {
   console.log(user);
   return (
     <div>
-      <ListFilesCard user={media} />
+      <ListFilesCard userId={user?.user?._id} user={media} filetype="videos" />
     </div>
   );
 };

@@ -2,8 +2,10 @@ import Image from "next/image";
 import React from "react";
 import Typography from "../../../../../components/typography";
 import DashbaordSideBarLinks from "./sidebar-links";
+import { loggedInUser } from "@/actions/auth/me";
 
-const DashbaordSideBar = () => {
+const DashbaordSideBar = async () => {
+  const user = await loggedInUser();
   // console.lo;
   return (
     <div className="w-full h-full sm:flex flex-col justify-between items-start overflow-hidden">
@@ -52,13 +54,13 @@ const DashbaordSideBar = () => {
           </div>
           <div className="hidden lg:flex flex-col justify-between items-start">
             <Typography variant="h5" className="text-[14px] font-[600]">
-              Shavaiz Ali
+              {user?.user?.fullName}
             </Typography>
             <Typography
               variant="p"
               className="text-[12px] text-primaryBlueDark"
             >
-              hello@example.com
+              {user?.user?.email}
             </Typography>
           </div>
         </div>

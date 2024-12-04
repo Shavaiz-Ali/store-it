@@ -23,7 +23,7 @@ const DashbaordImages = async () => {
 
   return (
     <div>
-      <ListFilesCard user={images} />
+      <ListFilesCard userId={user?.user?._id} user={images} filetype="images" />
     </div>
   );
 };

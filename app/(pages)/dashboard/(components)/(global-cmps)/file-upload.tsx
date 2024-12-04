@@ -141,32 +141,64 @@ const DashbaordFileUpload = ({ userId }: { userId: string | any }) => {
   // }
 
   return (
-    <div
-      {...getRootProps()}
-      className="flex items-center justify-end gap-x-3 xs:gap-x-6 lg:w-full"
-    >
-      <Button
-        type="button"
-        className="relative w-[120px] h-[42px] xs:w-[146px] xs:h-[47px] rounded-[41px] bg-primaryOrangeLight text-white font-[600] text-[15px] leading-[20px] font-[family-name:var(--font-poppins-semibold)] hover:bg-primaryOrangeLight"
-      >
-        <form action="">
-          <Label
-            htmlFor="upload"
-            className="flex justify-center items-center gap-x-[8px]"
-          >
-            <Image
-              src={"/icons/upload.svg"}
-              alt=""
-              height={15}
-              width={20}
-              className="h-auto"
-            />
-            Upload
-          </Label>
-          <Input type="" {...getInputProps()} />
-        </form>
-        {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer w-[120px]"></div> */}
-      </Button>
+    <div className="flex items-center justify-end gap-x-3 xs:gap-x-6 lg:w-full">
+      <div {...getRootProps()} className="">
+        <Button
+          type="button"
+          className="relative w-[120px] h-[42px] xs:w-[146px] xs:h-[47px] rounded-[41px] bg-primaryOrangeLight text-white font-[600] text-[15px] leading-[20px] font-[family-name:var(--font-poppins-semibold)] hover:bg-primaryOrangeLight"
+        >
+          <form action="">
+            <Label
+              htmlFor="upload"
+              className="flex justify-center items-center gap-x-[8px]"
+            >
+              <Image
+                src={"/icons/upload.svg"}
+                alt=""
+                height={15}
+                width={20}
+                className="h-auto"
+              />
+              Upload
+            </Label>
+            <Input type="" {...getInputProps()} />
+          </form>
+          {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer w-[120px]"></div> */}
+        </Button>
+        {files && files.length > 0 && (
+          <div className="absolute bottom-12 right-7 bg-white border flex flex-col items-start gap-y-2 w-[300px] h-auto px-3 py-5 z-[99999999] rounded-[8px]">
+            <Typography variant="h2">Uploading</Typography>
+            {files.map((file) => {
+              const { type, extension } = getFileType(file.name);
+              return (
+                <div
+                  className="flex justify-between items-center w-full"
+                  key={Math.random()}
+                >
+                  <div className="flex justify-center items-center gap-x-2 max-w-[90%]">
+                    <div className="relative size-10 overflow-hidden rounded-full flex justify-center items-center">
+                      <Image
+                        src={getFileIcon(extension, type)}
+                        alt=""
+                        fill
+                        className=" h-auto rounded-full "
+                        priority={false}
+                      />
+                    </div>
+                    <Typography variant="p" className="line-clamp-1">
+                      {file.name}
+                    </Typography>
+                  </div>
+                  <div className="size-6 rounded-full flex justify-center items-center bg-gray-300 cursor-pointer">
+                    <X size={14} className="text-white" />
+                  </div>
+                </div>
+              );
+            })}
+            {/* ))} */}
+          </div>
+        )}
+      </div>
       <Button
         className="h-12 w-12 hidden rounded-full sm:flex justify-center items-center bg-primaryOrangeLight/10 hover:bg-primaryOrangeLight/20 p-0"
         onClick={async () => {
@@ -185,38 +217,6 @@ const DashbaordFileUpload = ({ userId }: { userId: string | any }) => {
         />
         {/* <span>Search</span> */}
       </Button>
-
-      {files && files.length > 0 && (
-        <div className="absolute bottom-12 right-7 bg-white border flex flex-col items-start gap-y-2 w-[280px] h-auto px-3 py-5 z-[99999999] rounded-[8px]">
-          <Typography variant="h2">Uploading</Typography>
-          {files.map((file) => {
-            const { type, extension } = getFileType(file.name);
-            return (
-              <div
-                className="flex justify-between items-center w-full"
-                key={Math.random()}
-              >
-                <div className="flex justify-center items-center gap-x-2">
-                  <div className="relative size-10 overflow-hidden rounded-full flex justify-center items-center">
-                    <Image
-                      src={getFileIcon(extension, type)}
-                      alt=""
-                      fill
-                      className=" h-auto rounded-full "
-                      priority={false}
-                    />
-                  </div>
-                  <Typography variant="p">{file.name}</Typography>
-                </div>
-                <div className="size-6 rounded-full flex justify-center items-center bg-gray-300 cursor-pointer">
-                  <X size={14} className="text-white" />
-                </div>
-              </div>
-            );
-          })}
-          {/* ))} */}
-        </div>
-      )}
     </div>
   );
 };

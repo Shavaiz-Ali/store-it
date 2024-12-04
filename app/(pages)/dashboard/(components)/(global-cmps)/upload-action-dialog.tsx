@@ -19,10 +19,12 @@ const DashboardUploadActionsDialog = ({
   action,
   openDialog,
   setOpenDialog,
+  handleActions,
 }: {
   action: string;
   openDialog: boolean;
   setOpenDialog: (open: boolean) => void;
+  handleActions: (actionType: string) => void;
 }) => {
   const detailsData = [
     { name: "Format", value: "Svg", id: Math.random() },
@@ -164,13 +166,13 @@ const DashboardUploadActionsDialog = ({
               <Button
                 type="button"
                 className="w-full py-6 px-4 bg-primaryOrangeLight hover:bg-primaryOrangeLight rounded-[30px] drop-shadow-md"
-                onClick={() => setOpenDialog(false)}
+                onClick={() => handleActions(action)}
               >
                 <Typography
                   variant="button"
                   className="font-semibold text-[15px] text-white "
                 >
-                  Cancel
+                  Confirm
                 </Typography>
               </Button>
             </div>

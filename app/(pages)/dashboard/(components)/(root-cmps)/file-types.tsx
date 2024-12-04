@@ -13,8 +13,8 @@ const DashboardFileTypes = async ({ userDetails }: { userDetails: any }) => {
 
   const usedStorage = async (type: string) => {
     const size = await getFilesSize({ type: type });
-
-    if (size) {
+    console.log(size);
+    if (size && !size?.status) {
       return convertFileSize(size);
     }
     return convertFileSize(0);

@@ -11,11 +11,20 @@ import {
   getFileType,
 } from "@/lib/utils";
 
-const ListFilesCard = ({ user }: any) => {
+const ListFilesCard = ({
+  user,
+  filetype,
+  userId,
+}: {
+  user: any;
+  filetype: string;
+  userId: string;
+}) => {
   return (
     <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-2 xs:gap-4 sm:gap-6 w-full">
       {user?.map((user: any) => {
         const { type, extension } = getFileType(user?.filename);
+        console.log(type);
         return (
           <div
             className="space-y-5 rounded-[20px] bg-white sm:p-4 p-3"
@@ -46,7 +55,11 @@ const ListFilesCard = ({ user }: any) => {
                 )}
               </div>
               <div className="flex flex-col items-center">
-                <DashboardUploadActions />
+                <DashboardUploadActions
+                  fileType={filetype}
+                  fileId={user?._id}
+                  userId={userId}
+                />
                 <Typography variant="p" className="text-[1rem]">
                   {convertFileSize(user?.size)}
                 </Typography>
