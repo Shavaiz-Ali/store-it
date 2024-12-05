@@ -19,14 +19,17 @@ const DashboardUploadActions = ({
   fileType,
   fileId,
   userId,
+  public_id,
 }: {
   fileType: string;
   fileId: string;
   userId: string;
+  public_id: string;
 }) => {
   const [options, setOptions] = useState<boolean>(false);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [action, setAction] = useState<string>("");
+  const [loader, setLoader] = useState<boolean>(false);
   const pathname = usePathname();
   const optionsData = [
     {
@@ -53,10 +56,11 @@ const DashboardUploadActions = ({
 
   const handleActions = (actionType: string) => {
     if (actionType === "Delete") {
-      deleteFile({ fileType, fileId, userId, pathname })
+      setLoader(true);
+      deleteFile({ fileType, fileId, userId, pathname, public_id })
         .then((data) => {
           if (data?.status === 200) {
-            alert("file deleted successfully!");
+            setLoader(false);
           }
         })
         .catch((err) => {
@@ -64,6 +68,7 @@ const DashboardUploadActions = ({
           console.log(err);
         })
         .finally(() => {
+          setLoader(false);
           setOpenDialog(false);
         });
     }
@@ -117,6 +122,7 @@ const DashboardUploadActions = ({
           openDialog={openDialog}
           setOpenDialog={setOpenDialog}
           handleActions={handleActions}
+          loader={loader}
         />
       )}
     </div>

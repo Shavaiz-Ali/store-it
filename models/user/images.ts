@@ -3,7 +3,11 @@ import mongoose from "mongoose";
 const imagesSchema = new mongoose.Schema(
   {
     url: {
-      type: String, // Use a single string for the image URL
+      type: String,
+      required: true,
+    },
+    public_id: {
+      type: String,
       required: true,
     },
     filename: {

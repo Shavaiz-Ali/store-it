@@ -6,23 +6,27 @@ import { Image } from "@/models/user/images";
 import { User } from "@/models/user/user";
 import { Video } from "@/models/user/videos";
 import { revalidatePath } from "next/cache";
+import { v2 as cloudinary } from "cloudinary";
 
 export const deleteFile = async ({
   userId,
   fileId,
   fileType,
   pathname,
+  public_id,
 }: {
   userId: string;
   fileId: string;
   fileType: string;
   pathname: string;
+  public_id: string;
 }) => {
   try {
     console.log("userId: " + userId);
     console.log("fileId: " + fileId);
     console.log("fileType: " + fileType);
     console.log("pathname: " + pathname);
+    console.log("public_id: " + public_id);
     if (!userId || !fileId) {
       return {
         success: false,
@@ -82,19 +86,28 @@ export const deleteFile = async ({
       };
     }
 
-    await User.findByIdAndUpdate(userId, {
-      $pull: { [referenceKey]: fileId },
-    });
+    const response = await cloudinary.uploader.destroy(public_id);
+    if (response.result) {
+      await User.findByIdAndUpdate(userId, {
+        $pull: { [referenceKey]: fileId },
+      });
 
-    // Delete the file from the respective collection
-    await FileModel.findByIdAndDelete(fileId);
+      // Delete the file from the respective collection
+      await FileModel.findByIdAndDelete(fileId);
 
-    revalidatePath(pathname);
+      revalidatePath(pathname);
+
+      return {
+        success: true,
+        message: "File deleted successfully!",
+        status: 200,
+      };
+    }
 
     return {
-      success: true,
-      message: "File deleted successfully!",
-      status: 200,
+      success: false,
+      message: "Failed to deleting file try again later!",
+      status: 500,
     };
 
     // const fileExists

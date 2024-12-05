@@ -85,13 +85,18 @@ export const uploadImageToCloudinary = async ({
       };
     }
 
+    console.log(uploadResult?.public_id);
+
     // Save Image to Database
     const imageDocument = await Image.create({
       url: uploadResult.url,
+      public_id: uploadResult.public_id,
       filename: file.name,
       size: file.size,
       format: file.type,
     });
+
+    console.log(imageDocument);
 
     if (!imageDocument) {
       return {
@@ -147,6 +152,7 @@ export const uploadImageToCloudinary = async ({
       message: "File uploaded successfully",
       // serializedUser,
       status: 200,
+      uploadResult,
     };
   } catch (error) {
     console.error("Upload Error:", error);

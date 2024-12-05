@@ -345,3 +345,25 @@ export const getFileUrl = (type: FileType) => {
       return "/dashboard/others";
   }
 };
+export const extractCloudinaryPublicId = (url: string) => {
+  if (!url) return null;
+
+  const urlParts = url.split("/");
+  const cloudinaryDomain = "cloudinary.com";
+  const uploadPath = "/upload/";
+
+  if (urlParts.includes(cloudinaryDomain)) {
+    const index = urlParts.indexOf(cloudinaryDomain);
+    const withoutPrefix = urlParts.slice(index + 1).join("/");
+    const publicId = withoutPrefix.replace(uploadPath, "").split(".")[0];
+    return publicId;
+  } else {
+    const urlPartsWithoutProtocol = url
+      .replace("http://", "")
+      .replace("https://", "")
+      .split("/");
+    const publicId =
+      urlPartsWithoutProtocol[urlPartsWithoutProtocol.length - 1].split(".")[1];
+    return publicId;
+  }
+};

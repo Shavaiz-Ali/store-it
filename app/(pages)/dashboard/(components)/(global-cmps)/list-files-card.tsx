@@ -6,6 +6,7 @@ import DashboardUploadActions from "./upload-actions";
 import {
   cn,
   convertFileSize,
+  extractCloudinaryPublicId,
   formatDateTime,
   getFileIcon,
   getFileType,
@@ -24,7 +25,8 @@ const ListFilesCard = ({
     <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-2 xs:gap-4 sm:gap-6 w-full">
       {user?.map((user: any) => {
         const { type, extension } = getFileType(user?.filename);
-        console.log(type);
+        const public_id = extractCloudinaryPublicId(user?.url);
+        console.log(public_id);
         return (
           <div
             className="space-y-5 rounded-[20px] bg-white sm:p-4 p-3"
@@ -59,6 +61,7 @@ const ListFilesCard = ({
                   fileType={filetype}
                   fileId={user?._id}
                   userId={userId}
+                  public_id={user?.public_id}
                 />
                 <Typography variant="p" className="text-[1rem]">
                   {convertFileSize(user?.size)}

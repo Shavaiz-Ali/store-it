@@ -88,6 +88,7 @@ export const uploadRawToCloudinary = async ({
     // Save Image to Database
     const rawDocument = await Document.create({
       url: uploadResult.url,
+      public_id: uploadResult.public_id,
       filename: file.name,
       size: file.size,
       format: file.type,

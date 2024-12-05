@@ -34,14 +34,19 @@ export const getFilesSize = async ({ type }: string | any) => {
 
     if (type) {
       let size: null | any = null;
+      let updatedAt: null | any = null;
 
       user?.[type].forEach((file: any) => {
         if (file?.size) {
           size += file?.size;
+          updatedAt = file?.updatedAt;
         }
       });
 
-      return size;
+      return {
+        size,
+        updatedAt: updatedAt,
+      };
     }
 
     return {

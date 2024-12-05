@@ -89,6 +89,7 @@ export const uploadVideoToCloudinary = async ({
     // Save Image to Database
     const videoDocument = await Video.create({
       url: uploadResult.url,
+      public_id: uploadResult.public_id,
       filename: file.name,
       size: file.size,
       format: file.type,
