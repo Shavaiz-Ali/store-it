@@ -17,6 +17,7 @@ const DashboardPage = async () => {
       </div>
       <DashboardRecentUploads
         recentUploads={user && user?.user && user?.user?.recentUploads}
+        user={user}
       />
     </div>
   );

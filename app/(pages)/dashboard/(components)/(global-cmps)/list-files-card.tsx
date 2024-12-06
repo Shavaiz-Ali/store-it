@@ -6,7 +6,7 @@ import DashboardUploadActions from "./upload-actions";
 import {
   cn,
   convertFileSize,
-  extractCloudinaryPublicId,
+  // extractCloudinaryPublicId,
   formatDateTime,
   getFileIcon,
   getFileType,
@@ -25,8 +25,9 @@ const ListFilesCard = ({
     <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-2 xs:gap-4 sm:gap-6 w-full">
       {user?.map((user: any) => {
         const { type, extension } = getFileType(user?.filename);
-        const public_id = extractCloudinaryPublicId(user?.url);
-        console.log(public_id);
+        // const public_id = extractCloudinaryPublicId(user?.url);
+        // console.log(public_id);
+        console.log(extension);
         return (
           <div
             className="space-y-5 rounded-[20px] bg-white sm:p-4 p-3"
@@ -34,7 +35,7 @@ const ListFilesCard = ({
           >
             <div className="flex justify-between items-center w-full">
               <div className="relative size-20 rounded-full bg-primaryOrangeLight/10 flex justify-center items-center overflow-hidden">
-                {type === "image" ? (
+                {type === "image" && !user?.filename?.includes("svg") ? (
                   <Image
                     src={user?.url}
                     alt="folder"
@@ -62,6 +63,8 @@ const ListFilesCard = ({
                   fileId={user?._id}
                   userId={userId}
                   public_id={user?.public_id}
+                  user={user}
+                  extension={extension}
                 />
                 <Typography variant="p" className="text-[1rem]">
                   {convertFileSize(user?.size)}
@@ -69,7 +72,10 @@ const ListFilesCard = ({
               </div>
             </div>
             <div className="space-y-[15px]">
-              <Typography variant="p" className="font-semibold leading-5">
+              <Typography
+                variant="p"
+                className="font-semibold leading-5 line-clamp-2"
+              >
                 {user?.filename}
               </Typography>
               <Typography variant="p" className="">

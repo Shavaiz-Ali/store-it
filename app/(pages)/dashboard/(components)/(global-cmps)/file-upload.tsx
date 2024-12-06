@@ -72,7 +72,6 @@ const DashbaordFileUpload = ({ userId }: { userId: string | any }) => {
         try {
           if (!userId) alert("Access denied! userId is missing");
           if (file.type.startsWith("image") || file.type.includes("image")) {
-            alert(`reached to image upload ${file.type}`);
             formdata.append("file", file);
             setIsUploading(true);
             return await uploadImageToCloudinary({

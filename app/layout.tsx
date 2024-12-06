@@ -9,6 +9,7 @@ import {
 } from "./fonts";
 import { Suspense } from "react";
 import Loader from "./loader";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Store it",
@@ -26,6 +27,7 @@ export default function RootLayout({
         className={`${poppinsBold.variable} ${poppinsSemiBold.variable} ${poppinsMedium.variable} ${poppinsRegular.variable}`}
       >
         <Suspense fallback={<Loader />}>{children}</Suspense>
+        <Toaster />
       </body>
     </html>
   );

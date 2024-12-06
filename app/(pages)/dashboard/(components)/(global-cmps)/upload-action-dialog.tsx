@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -21,12 +21,16 @@ const DashboardUploadActionsDialog = ({
   setOpenDialog,
   handleActions,
   loader,
+  setNewName,
+  newName,
 }: {
   action: string;
   openDialog: boolean;
   setOpenDialog: (open: boolean) => void;
-  handleActions: (actionType: string) => void;
+  handleActions: ({ actionType }: { actionType: string }) => void;
   loader: boolean;
+  setNewName: (newName: string) => void;
+  newName: string | undefined;
 }) => {
   const detailsData = [
     { name: "Format", value: "Svg", id: Math.random() },
@@ -64,9 +68,9 @@ const DashboardUploadActionsDialog = ({
           {action === "Rename" && (
             <Input
               className="peer w-full border !py-3 !px-2 shadow-none placeholder:text-light-200 outline-none focus-visible:border-black ring-offset-transparent focus:ring-transparent focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-transparent focus-visible:ring-offset-2 text-backgroundGrayDark font-[family-name:var(--font-poppins-semibold)] text-sm leading-5 focus:text-backgroundGrayLight focus:font-[600] focus:placeholder:font-[400] focus:placeholder:text-backgroundGrayDark"
-              value={"DevOverflow Intro.mp4"}
+              value={newName}
               type="text"
-              onChange={() => {}}
+              onChange={(e) => setNewName(e.target.value)}
             />
           )}
           {action === "Share" && (
@@ -168,7 +172,7 @@ const DashboardUploadActionsDialog = ({
               <Button
                 type="button"
                 className="w-full py-6 px-4 bg-primaryOrangeLight hover:bg-primaryOrangeLight rounded-[30px] drop-shadow-md"
-                onClick={() => handleActions(action)}
+                onClick={() => handleActions({ actionType: action })}
                 disabled={loader}
               >
                 <Typography

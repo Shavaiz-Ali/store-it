@@ -6,11 +6,15 @@ import HeaderSearch from "./search";
 import DashbaordFileUpload from "./file-upload";
 import DashboardSidebarMobile from "./sidebar-mobile";
 import { loggedInUser } from "@/actions/auth/me";
+import { useToast } from "@/hooks/use-toast";
+import { useAlertMessages } from "@/hooks/use-alerts";
 
 const DashboardHeader = () => {
   const [sidebarMobile, setSidebarMobile] = useState(false);
   // const [files, setFiles] = useState<FileList | null>(null);
   const [user, setUser] = useState<null | any>(null);
+
+  const hey = useAlertMessages();
 
   const fetchUser = async () => {
     await loggedInUser()

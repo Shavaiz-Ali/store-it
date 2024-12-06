@@ -1,30 +1,33 @@
 "use server";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Document } from "@/models/user/documents";
 import { Image } from "@/models/user/images";
 import { User } from "@/models/user/user";
 import { Video } from "@/models/user/videos";
 import { revalidatePath } from "next/cache";
-import { v2 as cloudinary } from "cloudinary";
 
-export const deleteFile = async ({
+export const renameFile = async ({
   userId,
   fileId,
   fileType,
   pathname,
-  public_id,
+  newName,
+  extension,
 }: {
   userId: string;
   fileId: string;
   fileType: string;
   pathname: string;
-  public_id: string;
+  newName: string | undefined;
+  extension: string;
 }) => {
+  console.log("extension", extension);
   try {
-    if (!userId || !fileId) {
+    if (!userId || !fileId || !newName) {
       return {
         success: false,
-        message: "image id and userId are required!",
+        message: "userId, fileId, and newName are required!",
         status: 400,
       };
     }
@@ -80,31 +83,22 @@ export const deleteFile = async ({
       };
     }
 
-    const response = await cloudinary.uploader.destroy(public_id);
-    if (response.result) {
-      await User.findByIdAndUpdate(userId, {
-        $pull: { [referenceKey]: fileId },
-      });
+    const fileExtension = newName.includes(`.${extension}`)
+      ? newName
+      : `${newName}.${extension}`;
 
-      // Delete the file from the respective collection
-      await FileModel.findByIdAndDelete(fileId);
+    await FileModel.findByIdAndUpdate(
+      fileId,
+      { filename: `${fileExtension}` },
+      { new: true }
+    );
 
-      revalidatePath(pathname);
-
-      return {
-        success: true,
-        message: "File deleted successfully!",
-        status: 200,
-      };
-    }
-
+    revalidatePath(pathname);
     return {
-      success: false,
-      message: "Failed to deleting file try again later!",
-      status: 500,
+      success: true,
+      message: "File renamed successfully!",
+      status: 200,
     };
-
-    // const fileExists
   } catch (error) {
     console.log(error);
     return {

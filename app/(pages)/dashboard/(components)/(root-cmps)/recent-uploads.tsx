@@ -20,8 +20,10 @@ import Link from "next/link";
 
 const DashboardRecentUploads = async ({
   recentUploads,
+  user,
 }: {
   recentUploads: any[] | undefined;
+  user: any;
 }) => {
   // const user = await loggedInUser();
   // const userUploads = user?.user;
@@ -72,7 +74,14 @@ const DashboardRecentUploads = async ({
                   </Typography>
                 </div>
               </Link>{" "}
-              <DashboardUploadActions />
+              <DashboardUploadActions
+                extension={extension}
+                fileType={type}
+                userId={user?._id}
+                public_id={recent?.public_id}
+                user={recent}
+                fileId={recent?._id}
+              />
             </div>
           );
         })

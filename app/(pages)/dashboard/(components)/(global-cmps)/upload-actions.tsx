@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useState } from "react";
 
@@ -14,23 +15,37 @@ import Typography from "@/components/typography";
 import DashboardUploadActionsDialog from "./upload-action-dialog";
 import { deleteFile } from "@/actions/dashboard/delete-file";
 import { usePathname } from "next/navigation";
+import { renameFile } from "@/actions/dashboard/rename-file";
+// import { useToast } from "@/hooks/use-toast";
+import { useAlertMessages } from "@/hooks/use-alerts";
 
 const DashboardUploadActions = ({
   fileType,
   fileId,
   userId,
   public_id,
+  user,
+  extension,
 }: {
   fileType: string;
   fileId: string;
   userId: string;
   public_id: string;
+  user: any;
+  extension: string;
 }) => {
   const [options, setOptions] = useState<boolean>(false);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [action, setAction] = useState<string>("");
   const [loader, setLoader] = useState<boolean>(false);
+  const [newName, setNewName] = useState<string | undefined>(user?.filename);
+  // const { toast } = useToast();
+  const { handleApiResponseMessages } = useAlertMessages();
+
+  console.log(extension);
+
   const pathname = usePathname();
+
   const optionsData = [
     {
       name: "Rename",
@@ -54,23 +69,61 @@ const DashboardUploadActions = ({
     },
   ];
 
-  const handleActions = (actionType: string) => {
-    if (actionType === "Delete") {
+  const handleActions = ({ actionType }: { actionType: string }) => {
+    try {
       setLoader(true);
-      deleteFile({ fileType, fileId, userId, pathname, public_id })
-        .then((data) => {
-          if (data?.status === 200) {
+      if (actionType === "Delete") {
+        deleteFile({ fileType, fileId, userId, pathname, public_id })
+          .then((data) => {
+            handleApiResponseMessages(
+              data?.message as string,
+              data?.status as number
+            );
+            if (data?.status === 200) {
+              setLoader(false);
+            }
+          })
+          .catch((err) => {
+            handleApiResponseMessages(
+              err?.message as string,
+              err?.status as number
+            );
+            setOpenDialog(false);
+            console.log(err);
+          })
+          .finally(() => {
             setLoader(false);
-          }
-        })
-        .catch((err) => {
-          setOpenDialog(false);
-          console.log(err);
-        })
-        .finally(() => {
-          setLoader(false);
-          setOpenDialog(false);
-        });
+            setOpenDialog(false);
+          });
+      } else if (actionType === "Rename") {
+        // const { extension } = getFileType(user?.filename);
+        // console.log(extension);
+        renameFile({ fileType, fileId, userId, pathname, newName, extension })
+          .then((data) => {
+            handleApiResponseMessages(
+              data?.message as string,
+              data?.status as number
+            );
+            if (data?.status === 200) {
+              setLoader(false);
+            }
+          })
+          .catch((err) => {
+            handleApiResponseMessages(
+              err?.message as string,
+              err?.status as number
+            );
+            setOpenDialog(false);
+            console.log(err);
+          })
+          .finally(() => {
+            setLoader(false);
+            setOpenDialog(false);
+          });
+      }
+    } catch (error) {
+      setLoader(false);
+      throw new Error(error as any);
     }
   };
   return (
@@ -123,6 +176,8 @@ const DashboardUploadActions = ({
           setOpenDialog={setOpenDialog}
           handleActions={handleActions}
           loader={loader}
+          setNewName={setNewName}
+          newName={newName}
         />
       )}
     </div>

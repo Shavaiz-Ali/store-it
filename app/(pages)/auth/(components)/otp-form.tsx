@@ -10,23 +10,26 @@ import {
 } from "@/components/ui/input-otp";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 const OtpForm = ({
   email,
   setUserOTP,
   userOTP,
   handleCreateUser,
   loading,
+  setOtpPopUp,
 }: {
   email: any;
   setUserOTP: (value: string) => void;
   userOTP: string;
   handleCreateUser: () => void;
   loading: boolean;
+  setOtpPopUp: (value: boolean) => void;
 }) => {
   console.log(userOTP);
   return (
     <div className="fixed top-0 left-0 min-h-screen w-full bg-[#333F4E]/20 flex justify-center items-center">
-      <div className="w-[95%] h-[360px] sm:w-[550px] bg-white flex flex-col gap-[6px] justify-center items-center rounded-[20px] py-[40px] px-[20px] sm:px-[36px]">
+      <div className="relative w-[95%] h-[360px] sm:w-[550px] bg-white flex flex-col gap-[6px] justify-center items-center rounded-[20px] py-[40px] px-[20px] sm:px-[36px]">
         <h1 className="text-[24px] font-[700] leading-[36px] font-[family-name:var(--font-poppins-bold)] text-backgroundGrayLight text-center">
           Enter OTP
         </h1>
@@ -76,6 +79,13 @@ const OtpForm = ({
               Click to resend.
             </span>
           </p>
+        </div>
+        <div className="absolute top-4 right-4">
+          <X
+            size={20}
+            className="text-backgroundGrayLight cursor-pointer"
+            onClick={() => setOtpPopUp(false)}
+          />
         </div>
       </div>
     </div>

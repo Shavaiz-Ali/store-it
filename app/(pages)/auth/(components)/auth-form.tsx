@@ -26,6 +26,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import { Login } from "@/actions/auth/login";
 import Typography from "../../../../components/typography";
+import { useAlertMessages } from "@/hooks/use-alerts";
 
 const AuthForm = (type: { type: FormType }) => {
   const [openOtpPopUp, setOtpPopUp] = useState(false);
@@ -46,68 +47,7 @@ const AuthForm = (type: { type: FormType }) => {
     },
   });
 
-  const handleApiResponseMessages = (message: string, status: number) => {
-    console.log(message, status);
-    switch (status) {
-      case 200:
-        toast({
-          variant: "success",
-          title: "Success",
-          description: `${
-            message ? message : "Something went wrong. Please try again"
-          }`,
-        });
-        break;
-      case 201:
-        toast({
-          variant: "success",
-          title: "Success",
-          description: `${
-            message ? message : "Something went wrong. Please try again"
-          }`,
-        });
-        break;
-      case 400:
-        toast({
-          variant: "destructive",
-          title: "Failure",
-          description: `${
-            message ? message : "Something went wrong. Please try again"
-          }`,
-        });
-        break;
-      case 401:
-        toast({
-          variant: "destructive",
-          title: "Failure",
-          description: `${
-            message ? message : "Something went wrong. Please try again"
-          }`,
-        });
-        break;
-      case 409:
-        toast({
-          variant: "destructive",
-          title: "Failure",
-          description: `${
-            message ? message : "Something went wrong. Please try again"
-          }`,
-        });
-        break;
-      case 500:
-        toast({
-          variant: "destructive",
-          title: "Failure",
-          description: `${
-            message ? message : "Something went wrong. Please try again"
-          }`,
-        });
-        break;
-
-      default:
-        break;
-    }
-  };
+  const { handleApiResponseMessages } = useAlertMessages();
 
   //creating user after otp verfication
   const handleCreateUser = async () => {
@@ -124,7 +64,6 @@ const AuthForm = (type: { type: FormType }) => {
       );
       setTimeout(async () => {
         if (otpVerify?.status === 200) {
-          alert("verified");
           setUserOTP("");
           setOtpPopUp(false);
           setLoading(false);
@@ -331,6 +270,7 @@ const AuthForm = (type: { type: FormType }) => {
           userOTP={userOTP}
           handleCreateUser={handleCreateUser}
           loading={loading}
+          setOtpPopUp={setOtpPopUp}
         />
       )}
     </>
