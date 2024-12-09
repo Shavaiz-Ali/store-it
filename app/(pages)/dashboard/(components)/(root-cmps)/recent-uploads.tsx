@@ -35,6 +35,7 @@ const DashboardRecentUploads = async ({
       {recentUploads && recentUploads && recentUploads?.length > 0 ? (
         recentUploads.map((recent: any) => {
           const { type, extension } = getFileType(recent?.filename);
+          console.log(type);
           const color = getColor(extension, type);
           const url = getFileUrl(type);
           return (
@@ -76,7 +77,7 @@ const DashboardRecentUploads = async ({
               </Link>{" "}
               <DashboardUploadActions
                 extension={extension}
-                fileType={type}
+                fileType={`${type}s`}
                 userId={user?._id}
                 public_id={recent?.public_id}
                 user={recent}

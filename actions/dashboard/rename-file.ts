@@ -23,6 +23,9 @@ export const renameFile = async ({
   extension: string;
 }) => {
   console.log("extension", extension);
+  console.log("extension", fileId);
+  console.log("extension", newName);
+  console.log("extension", userId);
   try {
     if (!userId || !fileId || !newName) {
       return {
