@@ -49,7 +49,7 @@ const DashboardRecentUploads = ({
               >
                 <div
                   className={cn(
-                    "relative size-12 rounded-full overflow-hidden bg-blue-600 flex justify-center items-center"
+                    "relative size-12 rounded-full overflow-hidden bg-blue-600 flex justify-center items-center shrink-0"
                   )}
                   style={{ backgroundColor: `${color}` }}
                 >
