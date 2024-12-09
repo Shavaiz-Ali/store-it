@@ -10,7 +10,7 @@ import {
 import { Suspense } from "react";
 import Loader from "./loader";
 import { Toaster } from "@/components/ui/toaster";
-import NextTopLoader from "nextjs-toploader";
+// import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
   title: "Store it",
@@ -29,7 +29,7 @@ export default function RootLayout({
       >
         <Suspense fallback={<Loader />}>{children}</Suspense>
         <Toaster />
-        <NextTopLoader color="#FA7275" showSpinner={false} />
+        {/* <NextTopLoader color="#FA7275" showSpinner={false} /> */}
       </body>
     </html>
   );
