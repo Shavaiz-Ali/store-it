@@ -1,11 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import React from "react";
 import Typography from "../../../../../components/typography";
 import DashbaordSideBarLinks from "./sidebar-links";
-import { loggedInUser } from "@/actions/auth/me";
 
-const DashbaordSideBar = async () => {
-  const user = await loggedInUser();
+const DashbaordSideBar = ({ user }: any) => {
   // console.lo;
   return (
     <div className="w-full h-full sm:flex flex-col justify-between items-start overflow-hidden">

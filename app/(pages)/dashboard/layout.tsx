@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import DashboardHeader from "./(components)/(global-cmps)/header";
 import Wrapper from "./(components)/(global-cmps)/wrapper";
 import DashbaordSideBar from "./(components)/(global-cmps)/sidebar";
+import { loggedInUser } from "@/actions/auth/me";
 // import { AuthContextProvider } from "@/context/authContext";
 
 export const metadata: Metadata = {
@@ -11,15 +12,16 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await loggedInUser();
   return (
     <Wrapper className="flex h-screen sm:space-x-3">
       <div className="hidden sm:flex remove-scrollbar w-[70px] lg:w-[280px] xl:w-[325px] pt-[30px] pb-[30px] h-full">
-        <DashbaordSideBar />
+        <DashbaordSideBar user={user} />
       </div>
       <div className="w-full flex-1 flex flex-col">
         <DashboardHeader />
