@@ -18,7 +18,7 @@ import Link from "next/link";
 // import { loggedInUser } from "@/actions/auth/me";
 // import { getFileType } from "@/lib/utils";
 
-const DashboardRecentUploads = async ({
+const DashboardRecentUploads = ({
   recentUploads,
   user,
 }: {
