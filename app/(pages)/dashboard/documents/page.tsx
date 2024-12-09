@@ -3,6 +3,7 @@ import { loggedInUser } from "@/actions/auth/me";
 import Typography from "@/components/typography";
 import React from "react";
 import ListFilesCard from "../(components)/(global-cmps)/list-files-card";
+import DashboardPagesHeader from "../(components)/(global-cmps)/pages-header";
 
 const DashboardDocuments = async () => {
   const user = await loggedInUser();
@@ -44,26 +45,23 @@ const DashboardDocuments = async () => {
     return filename?.split(".").pop()?.toLowerCase() || "";
   };
 
-  console.log(user);
-
-  if (!documents || documents?.length < 1) {
-    return (
-      <Typography variant="h2">
-        You haven`&lsquo;t uploaded any documents yet.
-      </Typography>
-    );
-  }
-
   return (
-    <div>
-      <ListFilesCard
-        user={documents?.filter((document: any) => {
-          const fileExtension = getFileExtension(document.filename);
-          return documentExtensions.includes(fileExtension);
-        })}
-        userId={user?.user?._id}
-        filetype="documents"
-      />
+    <div className="space-y-6">
+      <DashboardPagesHeader title="Documents" />
+      {!documents || documents?.length < 1 ? (
+        <Typography variant="h2">
+          You haven`&lsquo;t uploaded any documents yet.
+        </Typography>
+      ) : (
+        <ListFilesCard
+          user={documents?.filter((document: any) => {
+            const fileExtension = getFileExtension(document.filename);
+            return documentExtensions.includes(fileExtension);
+          })}
+          userId={user?.user?._id}
+          filetype="documents"
+        />
+      )}
     </div>
   );
 };

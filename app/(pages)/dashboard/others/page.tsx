@@ -3,6 +3,7 @@ import { loggedInUser } from "@/actions/auth/me";
 import Typography from "@/components/typography";
 import React from "react";
 import ListFilesCard from "../(components)/(global-cmps)/list-files-card";
+import DashboardPagesHeader from "../(components)/(global-cmps)/pages-header";
 
 const DashbaordOthers = async () => {
   const user = await loggedInUser();
@@ -11,14 +12,6 @@ const DashbaordOthers = async () => {
   }
 
   const documents = user && user?.user && user?.user?.documents;
-
-  if (!documents || documents?.length < 1) {
-    return (
-      <Typography variant="h2">
-        You haven`&lsquo;t uploaded any documents yet.
-      </Typography>
-    );
-  }
 
   const documentExtensions = [
     "pdf",
@@ -55,15 +48,22 @@ const DashbaordOthers = async () => {
   console.log(user);
 
   return (
-    <div>
-      <ListFilesCard
-        user={documents?.filter((document: any) => {
-          const fileExtension = getFileExtension(document.filename);
-          return !documentExtensions.includes(fileExtension); // Show only matching extensions
-        })}
-        userId={user?.user?._id}
-        filetype="documents"
-      />
+    <div className="space-y-6">
+      <DashboardPagesHeader title="Others" />
+      {!documents || documents?.length < 1 ? (
+        <Typography variant="h2">
+          You haven`&lsquo;t uploaded any documents yet.
+        </Typography>
+      ) : (
+        <ListFilesCard
+          user={documents?.filter((document: any) => {
+            const fileExtension = getFileExtension(document.filename);
+            return !documentExtensions.includes(fileExtension); // Show only matching extensions
+          })}
+          userId={user?.user?._id}
+          filetype="documents"
+        />
+      )}
     </div>
   );
 };

@@ -178,7 +178,7 @@ export const getFileIcon = (
 };
 
 // DASHBOARD UTILS
-export const getUsageSummary = (totalSpace?: any) => {
+export const getUsageSummary = (size?: any) => {
   return [
     {
       title: "Documents",
