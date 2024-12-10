@@ -265,7 +265,7 @@ const AuthForm = (type: { type: FormType }) => {
       </FormProvider>
       {openOtpPopUp && (
         <OtpForm
-          email={""}
+          email={formData?.get("email")}
           setUserOTP={setUserOTP}
           userOTP={userOTP}
           handleCreateUser={handleCreateUser}

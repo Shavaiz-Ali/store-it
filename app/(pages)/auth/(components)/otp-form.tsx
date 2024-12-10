@@ -34,7 +34,8 @@ const OtpForm = ({
           Enter OTP
         </h1>
         <p className="text-sm font-[400] leading-[20px] font-[family-name:var(--font-poppins-regular)] text-backgroundGrayLight text-center">
-          We&apos;ve sent a code to {email}
+          We&apos;ve sent a code to{" "}
+          <span className="text-primaryOrangeLight">{email}</span>
         </p>
         <InputOTP
           maxLength={6}
