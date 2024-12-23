@@ -4,11 +4,13 @@ import { loggedInUser } from "@/actions/auth/me";
 import Typography from "@/components/typography";
 import DashboardPagesHeader from "../(components)/(global-cmps)/pages-header";
 
-const DashbaordImages = async ({
-  searchParams,
-}: {
-  searchParams: { query: string };
-}) => {
+type Props = {
+  searchParams: {
+    query: string;
+  };
+};
+
+const DashbaordImages = async ({ searchParams }: Props) => {
   const user = await loggedInUser();
   if (user?.status !== 200) {
     return <Typography variant="h2">Empty1</Typography>;
