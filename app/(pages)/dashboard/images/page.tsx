@@ -15,13 +15,6 @@ const DashbaordImages = async ({
   }
   const query = searchParams?.query;
   const images = user && user?.user && user?.user?.images;
-
-  // if (query) {
-  //   console.log("query", query);
-  //   images?.filter((image) =>
-  //     image?.filename?.toLowerCase()?.includes(query?.toLowerCase())
-  //   );
-  // }
   return (
     <div className="space-y-6">
       <DashboardPagesHeader title="Images" />
@@ -35,7 +28,8 @@ const DashbaordImages = async ({
           userId={user?.user?._id}
           user={
             query
-              ? images?.filter((image) =>
+              ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                images?.filter((image: any) =>
                   image?.filename?.toLowerCase()?.includes(query?.toLowerCase())
                 )
               : images
