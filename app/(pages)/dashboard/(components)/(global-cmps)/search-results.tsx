@@ -56,7 +56,7 @@ const SearchResults = ({
                   className="border-none outline-none bg-transparent hover:bg-transparent p-0"
                   onClick={() => {
                     setSearchResults(null);
-                    router.push(`${url}?${query}`);
+                    router.push(`${url}?query=${query}`);
                   }}
                 >
                   <Typography

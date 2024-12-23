@@ -4,13 +4,24 @@ import { loggedInUser } from "@/actions/auth/me";
 import Typography from "@/components/typography";
 import DashboardPagesHeader from "../(components)/(global-cmps)/pages-header";
 
-const DashbaordImages = async () => {
+const DashbaordImages = async ({
+  searchParams,
+}: {
+  searchParams: { query: string };
+}) => {
   const user = await loggedInUser();
   if (user?.status !== 200) {
     return <Typography variant="h2">Empty1</Typography>;
   }
-
+  const query = searchParams?.query;
   const images = user && user?.user && user?.user?.images;
+
+  // if (query) {
+  //   console.log("query", query);
+  //   images?.filter((image) =>
+  //     image?.filename?.toLowerCase()?.includes(query?.toLowerCase())
+  //   );
+  // }
   return (
     <div className="space-y-6">
       <DashboardPagesHeader title="Images" />
@@ -22,7 +33,13 @@ const DashbaordImages = async () => {
       ) : (
         <ListFilesCard
           userId={user?.user?._id}
-          user={images}
+          user={
+            query
+              ? images?.filter((image) =>
+                  image?.filename?.toLowerCase()?.includes(query?.toLowerCase())
+                )
+              : images
+          }
           filetype="images"
         />
       )}
