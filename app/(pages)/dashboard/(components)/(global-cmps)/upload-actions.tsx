@@ -127,7 +127,7 @@ const DashboardUploadActions = ({
     }
   };
   return (
-    <div>
+    <div className="shrink-0">
       <Image
         src={"/icons/dots.svg"}
         alt="image"

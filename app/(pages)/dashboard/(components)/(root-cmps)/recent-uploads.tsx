@@ -40,12 +40,12 @@ const DashboardRecentUploads = ({
           const url = getFileUrl(type);
           return (
             <div
-              className="flex justify-between items-center w-full gap-x-2"
+              className="flex justify-between items-center w-full gap-x-2 overflow-hidden"
               key={Math.random()}
             >
               <Link
                 href={url}
-                className="flex justify-center items-center gap-x-2"
+                className="flex justify-center items-center gap-x-2 shrink-1"
               >
                 <div
                   className={cn(
@@ -63,7 +63,7 @@ const DashboardRecentUploads = ({
                 <div className="flex flex-col justify-between">
                   <Typography
                     variant="p"
-                    className="text-[14px] font-semibold leading-[20px] line-clamp-1"
+                    className="text-[14px] font-semibold leading-[20px] line-clamp-1 !text-wrap"
                   >
                     {recent.filename}
                   </Typography>
