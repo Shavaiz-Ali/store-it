@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Typography from "@/components/typography";
+import { Button } from "@/components/ui/button";
 import { formatDateTime, getFileIcon, getFileType } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -50,7 +51,9 @@ const SearchResults = ({
                     width={25}
                   />
                 </div>
-                <div
+                <Button
+                  type="button"
+                  className="border-none outline-none bg-transparent hover:bg-transparent p-0"
                   onClick={() => {
                     setSearchResults(null);
                     router.push(`${url}?${query}`);
@@ -62,7 +65,7 @@ const SearchResults = ({
                   >
                     {search?._doc?.filename}
                   </Typography>
-                </div>
+                </Button>
               </div>
               <div className="w-full text-end">
                 <Typography
