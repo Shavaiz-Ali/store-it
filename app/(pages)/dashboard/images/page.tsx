@@ -15,7 +15,7 @@ const DashbaordImages = async ({ searchParams }: Props) => {
   if (user?.status !== 200) {
     return <Typography variant="h2">Empty1</Typography>;
   }
-  const query = searchParams?.query;
+  const { query } = await searchParams;
   const images = user && user?.user && user?.user?.images;
   return (
     <div className="space-y-6">
