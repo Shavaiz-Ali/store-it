@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 
 import {
@@ -8,8 +9,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { usePathname, useRouter } from "next/navigation";
 
 const DashboardSort = () => {
+  const router = useRouter();
+  const pathname = usePathname();
   const sortOptions = [
     { id: 1, label: "Date created (newest)", value: "date_created_desc" },
     { id: 2, label: "Created Date (oldest)", value: "date_created_asc" },
@@ -19,7 +23,7 @@ const DashboardSort = () => {
     { id: 6, label: "Size (Lowest)", value: "size_asc" },
   ];
   return (
-    <Select>
+    <Select onValueChange={(value) => router.push(`${pathname}?sort=${value}`)}>
       <SelectTrigger className="sm:w-[200px] w-full">
         <SelectValue
           className="text-sm font-medium text-backgroundGrayLight"
@@ -32,7 +36,7 @@ const DashboardSort = () => {
             <SelectItem
               className="text-sm font-medium text-backgroundGrayLight"
               key={option.id}
-              value={option.label}
+              value={option.value}
             >
               {option?.label}
             </SelectItem>

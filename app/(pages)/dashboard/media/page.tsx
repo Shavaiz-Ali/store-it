@@ -14,7 +14,7 @@ const DashboardImages = async () => {
   const media = user && user?.user && user?.user?.videos;
   return (
     <div className="space-y-6">
-      <DashboardPagesHeader title="Media" />
+      <DashboardPagesHeader title="Media" type="videos" user={user} />
       {!media || media?.length < 1 ? (
         <Typography variant="h2">
           You haven`&lsquo;t uploaded any media yet.

@@ -10,7 +10,7 @@ export default {
   theme: {
     extend: {
       screens: {
-        xs: "400px",
+        xs: "440px",
         xlg: "1440px",
       },
       colors: {

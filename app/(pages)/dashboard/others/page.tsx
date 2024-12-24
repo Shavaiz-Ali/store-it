@@ -49,7 +49,7 @@ const DashbaordOthers = async () => {
 
   return (
     <div className="space-y-6">
-      <DashboardPagesHeader title="Others" />
+      <DashboardPagesHeader title="Others" type="others" user={user} />
       {!documents || documents?.length < 1 ? (
         <Typography variant="h2">
           You haven`&lsquo;t uploaded any documents yet.

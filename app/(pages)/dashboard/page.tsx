@@ -14,6 +14,8 @@ const DashboardPage = async () => {
   const user = await loggedInUser();
   const usageSummary = getUsageSummary();
 
+  if (!user?.user) return;
+
   // Prefetch all data
   const fileTypesData = await Promise.all(
     usageSummary.map(async (summary) => {

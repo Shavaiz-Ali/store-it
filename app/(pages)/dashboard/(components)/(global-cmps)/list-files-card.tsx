@@ -22,7 +22,7 @@ const ListFilesCard = ({
   userId: string;
 }) => {
   return (
-    <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-2 xs:gap-4 sm:gap-6 w-full">
+    <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-4 md:grid-cols-3 gap-2 xs:gap-4 sm:gap-6 w-full">
       {user?.map((user: any) => {
         const { type, extension } = getFileType(user?.filename);
         // const public_id = extractCloudinaryPublicId(user?.url);

@@ -180,10 +180,7 @@ const DashboardUploadActionsDialog = ({
                 className="w-full py-6 px-4 bg-white rounded-[30px] drop-shadow-md hover:bg-white"
                 onClick={() => setOpenDialog(false)}
               >
-                <Typography
-                  variant="button"
-                  className="font-semibold text-[15px]"
-                >
+                <Typography variant="p" className="font-semibold text-[15px]">
                   Cancel
                 </Typography>
               </Button>
@@ -193,17 +190,19 @@ const DashboardUploadActionsDialog = ({
                 onClick={() => handleActions({ actionType: action })}
                 disabled={loader}
               >
-                <Typography
-                  variant="button"
-                  className="font-semibold text-[15px] text-white flex justify-center items-center gap-x-2"
-                >
+                <div className="flex justify-center items-center gap-x-2">
                   {loader && (
                     <div className="flex justify-center items-center gap-x-2">
                       <div className="h-4 w-4 rounded-full border border-white border-t-backgroundGrayLight animate-spin" />
                     </div>
                   )}
-                  Confirm
-                </Typography>
+                  <Typography
+                    variant="p"
+                    className="font-semibold text-[15px] text-white flex justify-center items-center gap-x-2"
+                  >
+                    Confirm
+                  </Typography>
+                </div>
               </Button>
             </div>
           )}

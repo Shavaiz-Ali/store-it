@@ -166,7 +166,7 @@ const DashbaordFileUpload = ({ userId }: { userId: string | any }) => {
         </Button>
         {files && files.length > 0 && (
           <div className="absolute bottom-12 right-7 bg-white border flex flex-col items-start gap-y-2 w-[300px] h-auto px-3 py-5 z-[99999999] rounded-[8px]">
-            <Typography variant="h2">Uploading</Typography>
+            <Typography variant="h2">Uploading...</Typography>
             {files.map((file) => {
               const { type, extension } = getFileType(file.name);
               return (
@@ -175,11 +175,12 @@ const DashbaordFileUpload = ({ userId }: { userId: string | any }) => {
                   key={Math.random()}
                 >
                   <div className="flex justify-center items-center gap-x-2 max-w-[90%]">
-                    <div className="relative size-10 overflow-hidden rounded-full flex justify-center items-center">
+                    <div className="relative size-10 overflow-hidden rounded-full flex justify-center items-center shrink-0 before:absolute before:w-full before:h-full before:-top-0 before:left-0 before:border-t before:border-red-500 before:animate-spin before:rounded-full">
                       <Image
                         src={getFileIcon(extension, type)}
                         alt=""
-                        fill
+                        height={24}
+                        width={24}
                         className=" h-auto rounded-full "
                         priority={false}
                       />

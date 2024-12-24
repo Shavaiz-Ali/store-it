@@ -379,3 +379,38 @@ export const getsearchFilteredData = ({
     item?.filename?.toLowerCase()?.includes(query?.toLowerCase())
   );
 };
+
+export const sortFiles = (data: any, sortType: any) => {
+  switch (sortType) {
+    case "name_asc":
+      return data.sort(
+        (a: { size: number }, b: { size: number }) => a.size - b.size
+      );
+    case "name_asc":
+      return data.sort(
+        (a: { size: number }, b: { size: number }) => b.size - a.size
+      );
+    case "date_created_desc": // Sort by date created (newest first)
+      return data.sort(
+        (a: { createdAt: string }, b: { createdAt: string }) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+
+    case "date_created_asc": // Sort by date created (oldest first)
+      return data.sort(
+        (a: { createdAt: string }, b: { createdAt: string }) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      );
+    case "size_desc": // Sort by size (largest first)
+      return data.sort(
+        (a: { size: number }, b: { size: number }) => b.size - a.size
+      );
+
+    case "size_asc": // Sort by size (smallest first)
+      return data.sort(
+        (a: { size: number }, b: { size: number }) => a.size - b.size
+      );
+    default:
+      return data;
+  }
+};
