@@ -7,8 +7,8 @@ import { getsearchFilteredData, sortFiles } from "@/lib/utils";
 
 type Props = {
   searchParams: {
-    query: string;
-    sort: string;
+    query?: string;
+    sort?: string;
   };
 };
 

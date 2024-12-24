@@ -390,23 +390,23 @@ export const sortFiles = (data: any, sortType: any) => {
       return data.sort(
         (a: { size: number }, b: { size: number }) => b.size - a.size
       );
-    case "date_created_desc": // Sort by date created (newest first)
+    case "date_created_desc":
       return data.sort(
         (a: { createdAt: string }, b: { createdAt: string }) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
 
-    case "date_created_asc": // Sort by date created (oldest first)
+    case "date_created_asc":
       return data.sort(
         (a: { createdAt: string }, b: { createdAt: string }) =>
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
       );
-    case "size_desc": // Sort by size (largest first)
+    case "size_desc":
       return data.sort(
         (a: { size: number }, b: { size: number }) => b.size - a.size
       );
 
-    case "size_asc": // Sort by size (smallest first)
+    case "size_asc":
       return data.sort(
         (a: { size: number }, b: { size: number }) => a.size - b.size
       );
