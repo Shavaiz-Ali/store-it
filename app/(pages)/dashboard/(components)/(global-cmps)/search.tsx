@@ -6,16 +6,22 @@ import Image from "next/image";
 import { useDebounce } from "use-debounce";
 import React, { useEffect, useState, useCallback } from "react";
 import SearchResults from "./search-results";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const HeaderSearch = () => {
   const [query, setQuery] = useState<string>(""); // Track user input
   const [debouncedQuery] = useDebounce(query, 300); // Debounce user input
   const [searchResults, setSearchResults] = useState<[] | null>(null); // Track search results
+  const router = useRouter();
+  const path = usePathname();
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("query") || "";
 
   // Avoid recreating `handleSearch` on every render
   const handleSearch = useCallback(async () => {
     try {
       if (!debouncedQuery) {
+        router.push(path.replace(searchParams.toString(), ""));
         setSearchResults(null);
         return;
       }
@@ -31,6 +37,12 @@ const HeaderSearch = () => {
   useEffect(() => {
     handleSearch();
   }, [handleSearch]);
+
+  useEffect(() => {
+    if (!searchQuery) {
+      setQuery("");
+    }
+  }, [searchQuery]);
 
   return (
     <div className="relative flex items-start gap-x-[10px] h-[52px] w-[90%] lg:w-[482px] rounded-[30px] p-[16px] shadow-lg shadow-[#5968B20F] border">
@@ -53,6 +65,7 @@ const HeaderSearch = () => {
           searchResults={searchResults}
           setSearchResults={setSearchResults}
           query={query}
+          key={Math.random()}
         />
       )}
     </div>

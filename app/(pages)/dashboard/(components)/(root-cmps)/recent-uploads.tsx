@@ -82,6 +82,7 @@ const DashboardRecentUploads = ({
                 public_id={recent?.public_id}
                 user={recent}
                 fileId={recent?._id}
+                file={recent}
               />
             </div>
           );

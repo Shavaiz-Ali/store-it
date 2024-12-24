@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,8 @@ import Typography from "@/components/typography";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { X } from "lucide-react";
+import { convertFileSize, formatDateTime } from "@/lib/utils";
+import { getFilesSize } from "@/actions/file-size";
 
 const DashboardUploadActionsDialog = ({
   action,
@@ -23,7 +26,9 @@ const DashboardUploadActionsDialog = ({
   loader,
   setNewName,
   newName,
-}: {
+  file,
+}: // detailsData,
+{
   action: string;
   openDialog: boolean;
   setOpenDialog: (open: boolean) => void;
@@ -31,12 +36,19 @@ const DashboardUploadActionsDialog = ({
   loader: boolean;
   setNewName: (newName: string) => void;
   newName: string | undefined;
+  file: any;
+  // detailsData: any[];
 }) => {
+  console.log(file);
   const detailsData = [
-    { name: "Format", value: "Svg", id: Math.random() },
-    { name: "Size", value: "2 KB", id: Math.random() },
-    { name: "Owner", value: "Shavaiz", id: Math.random() },
-    { name: "Last edit", value: "3:00, 21 Nov", id: Math.random() },
+    { name: "Format", value: file?.format, id: Math.random() },
+    { name: "Size", value: convertFileSize(file?.size), id: Math.random() },
+    { name: "Owner", value: file?.filename, id: Math.random() },
+    {
+      name: "Last edit",
+      value: formatDateTime(file?.createdAt),
+      id: Math.random(),
+    },
   ];
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
@@ -138,15 +150,21 @@ const DashboardUploadActionsDialog = ({
             </div>
             <div className="space-y-2">
               {detailsData?.map((detail) => (
-                <div key={detail.id} className="flex items-center gap-x-6">
+                <div
+                  key={detail.id}
+                  className="flex items-center justify-start gap-x-6"
+                >
                   <Typography
                     variant="h5"
-                    className="w-[80px] text-backgroundGrayLight/50"
+                    className="w-[80px] text-backgroundGrayLight/50 "
                   >
                     {detail.name}
                     <span className="font-bold"> :</span>
                   </Typography>
-                  <Typography variant="h5" className="font-semibold">
+                  <Typography
+                    variant="h5"
+                    className="font-semibold line-clamp-1 text-start"
+                  >
                     {detail.value}
                   </Typography>
                 </div>

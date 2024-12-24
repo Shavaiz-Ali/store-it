@@ -367,3 +367,15 @@ export const extractCloudinaryPublicId = (url: string) => {
     return publicId;
   }
 };
+
+export const getsearchFilteredData = ({
+  query,
+  data,
+}: {
+  query: string;
+  data: any[] | null | undefined;
+}) => {
+  return data?.filter((item: any) =>
+    item?.filename?.toLowerCase()?.includes(query?.toLowerCase())
+  );
+};

@@ -3,6 +3,7 @@ import ListFilesCard from "../(components)/(global-cmps)/list-files-card";
 import { loggedInUser } from "@/actions/auth/me";
 import Typography from "@/components/typography";
 import DashboardPagesHeader from "../(components)/(global-cmps)/pages-header";
+import { getsearchFilteredData } from "@/lib/utils";
 
 type Props = {
   searchParams: {
@@ -31,9 +32,7 @@ const DashbaordImages = async ({ searchParams }: Props) => {
           user={
             query
               ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                images?.filter((image: any) =>
-                  image?.filename?.toLowerCase()?.includes(query?.toLowerCase())
-                )
+                getsearchFilteredData({ query, data: images as any })
               : images
           }
           filetype="images"

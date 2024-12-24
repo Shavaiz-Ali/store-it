@@ -65,6 +65,7 @@ const ListFilesCard = ({
                   public_id={user?.public_id}
                   user={user}
                   extension={extension}
+                  file={user}
                 />
                 <Typography variant="p" className="text-[1rem]">
                   {convertFileSize(user?.size)}

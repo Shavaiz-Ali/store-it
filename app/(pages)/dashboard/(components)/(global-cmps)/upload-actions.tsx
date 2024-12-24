@@ -18,6 +18,7 @@ import { usePathname } from "next/navigation";
 import { renameFile } from "@/actions/dashboard/rename-file";
 // import { useToast } from "@/hooks/use-toast";
 import { useAlertMessages } from "@/hooks/use-alerts";
+// import { getFileDetails } from "@/actions/dashboard/file-details";
 
 const DashboardUploadActions = ({
   fileType,
@@ -26,6 +27,7 @@ const DashboardUploadActions = ({
   public_id,
   user,
   extension,
+  file,
 }: {
   fileType: string;
   fileId: string;
@@ -33,11 +35,13 @@ const DashboardUploadActions = ({
   public_id: string;
   user: any;
   extension: string;
+  file: any;
 }) => {
   const [options, setOptions] = useState<boolean>(false);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [action, setAction] = useState<string>("");
   const [loader, setLoader] = useState<boolean>(false);
+  // const [detailsData, setDetailsData] = useState<any[]>([]);
   const [newName, setNewName] = useState<string | undefined>(user?.filename);
   // const { toast } = useToast();
   const { handleApiResponseMessages } = useAlertMessages();
@@ -120,12 +124,15 @@ const DashboardUploadActions = ({
             setLoader(false);
             setOpenDialog(false);
           });
+      } else {
+        return;
       }
     } catch (error) {
       setLoader(false);
       throw new Error(error as any);
     }
   };
+
   return (
     <div className="shrink-0">
       <Image
@@ -178,6 +185,8 @@ const DashboardUploadActions = ({
           loader={loader}
           setNewName={setNewName}
           newName={newName}
+          file={file}
+          // detailsData={detailsData}
         />
       )}
     </div>
