@@ -12,7 +12,7 @@ type Props = {
   };
 };
 
-const DashbaordImages = async ({ searchParams }: Props) => {
+export default async function DashbaordImages({ searchParams }: Props) {
   const user = await loggedInUser();
   console.log(await searchParams);
   if (user?.status !== 200) {
@@ -46,6 +46,4 @@ const DashbaordImages = async ({ searchParams }: Props) => {
       )}
     </div>
   );
-};
-
-export default DashbaordImages;
+}
