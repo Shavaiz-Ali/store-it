@@ -19,7 +19,7 @@ const DashbaordImages = async ({ searchParams }: Props) => {
     return <Typography variant="h2">Empty1</Typography>;
   }
 
-  const { query, sort } = await searchParams;
+  const { query, sort } = searchParams;
   const images = user && user?.user && user?.user?.images;
 
   return (
