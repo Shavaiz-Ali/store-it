@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import ListFilesCard from "../(components)/(global-cmps)/list-files-card";
 import { loggedInUser } from "@/actions/auth/me";
@@ -5,14 +6,18 @@ import Typography from "@/components/typography";
 import DashboardPagesHeader from "../(components)/(global-cmps)/pages-header";
 import { getsearchFilteredData, sortFiles } from "@/lib/utils";
 
-type Props = {
-  searchParams: {
-    query?: string;
-    sort?: string;
-  };
-};
+// interface Props {
+//   searchParams: {
+//     query?: string;
+//     sort?: string;
+//   };
+// }
 
-export default async function DashbaordImages({ searchParams }: Props) {
+const DashbaordImages = async ({
+  searchParams,
+}: {
+  searchParams: Promise<any> | any;
+}) => {
   const user = await loggedInUser();
   console.log(await searchParams);
   if (user?.status !== 200) {
@@ -46,4 +51,6 @@ export default async function DashbaordImages({ searchParams }: Props) {
       )}
     </div>
   );
-}
+};
+
+export default DashbaordImages;
