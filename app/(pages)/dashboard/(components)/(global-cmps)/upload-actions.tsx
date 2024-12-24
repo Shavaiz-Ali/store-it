@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { useState } from "react";
-
+import React, { useState, useCallback } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,11 +15,28 @@ import DashboardUploadActionsDialog from "./upload-action-dialog";
 import { deleteFile } from "@/actions/dashboard/delete-file";
 import { usePathname } from "next/navigation";
 import { renameFile } from "@/actions/dashboard/rename-file";
-// import { useToast } from "@/hooks/use-toast";
 import { useAlertMessages } from "@/hooks/use-alerts";
-// import { getFileDetails } from "@/actions/dashboard/file-details";
 
-const DashboardUploadActions = ({
+interface Option {
+  name: string;
+  icon: string;
+}
+
+interface User {
+  filename?: string;
+  // Add more fields as necessary
+}
+interface DashboardUploadActionsProps {
+  fileType: string;
+  fileId: string;
+  userId: string;
+  public_id: string;
+  user: User;
+  extension: string;
+  file: any;
+}
+
+const DashboardUploadActions: React.FC<DashboardUploadActionsProps> = ({
   fileType,
   fileId,
   userId,
@@ -28,138 +44,103 @@ const DashboardUploadActions = ({
   user,
   extension,
   file,
-}: {
-  fileType: string;
-  fileId: string;
-  userId: string;
-  public_id: string;
-  user: any;
-  extension: string;
-  file: any;
 }) => {
-  const [options, setOptions] = useState<boolean>(false);
-  const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const [action, setAction] = useState<string>("");
-  const [loader, setLoader] = useState<boolean>(false);
-  // const [detailsData, setDetailsData] = useState<any[]>([]);
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [actionType, setActionType] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
   const [newName, setNewName] = useState<string | undefined>(user?.filename);
-  // const { toast } = useToast();
   const { handleApiResponseMessages } = useAlertMessages();
-
-  console.log(extension);
-
   const pathname = usePathname();
 
-  const optionsData = [
-    {
-      name: "Rename",
-      icon: "/icons/edit.svg",
-    },
-    {
-      name: "Details",
-      icon: "/icons/info.svg",
-    },
-    {
-      name: "Share",
-      icon: "/icons/share.svg",
-    },
-    {
-      name: "Download",
-      icon: "/icons/download.svg",
-    },
-    {
-      name: "Delete",
-      icon: "/icons/delete.svg",
-    },
+  const optionsData: Option[] = [
+    { name: "Rename", icon: "/icons/edit.svg" },
+    { name: "Details", icon: "/icons/info.svg" },
+    { name: "Share", icon: "/icons/share.svg" },
+    { name: "Download", icon: "/icons/download.svg" },
+    { name: "Delete", icon: "/icons/delete.svg" },
   ];
 
-  const handleActions = ({ actionType }: { actionType: string }) => {
-    try {
-      setLoader(true);
-      if (actionType === "Delete") {
-        deleteFile({ fileType, fileId, userId, pathname, public_id })
-          .then((data) => {
-            handleApiResponseMessages(
-              data?.message as string,
-              data?.status as number
-            );
-            if (data?.status === 200) {
-              setLoader(false);
-            }
-          })
-          .catch((err) => {
-            handleApiResponseMessages(
-              err?.message as string,
-              err?.status as number
-            );
-            setOpenDialog(false);
-            console.log(err);
-          })
-          .finally(() => {
-            setLoader(false);
-            setOpenDialog(false);
-          });
-      } else if (actionType === "Rename") {
-        // const { extension } = getFileType(user?.filename);
-        // console.log(extension);
-        renameFile({ fileType, fileId, userId, pathname, newName, extension })
-          .then((data) => {
-            handleApiResponseMessages(
-              data?.message as string,
-              data?.status as number
-            );
-            if (data?.status === 200) {
-              setLoader(false);
-            }
-          })
-          .catch((err) => {
-            handleApiResponseMessages(
-              err?.message as string,
-              err?.status as number
-            );
-            setOpenDialog(false);
-            console.log(err);
-          })
-          .finally(() => {
-            setLoader(false);
-            setOpenDialog(false);
-          });
-      } else {
-        return;
+  const handleActions = useCallback(
+    async ({ actionType }: { actionType: string }) => {
+      setIsLoading(true);
+      try {
+        let response;
+        switch (actionType) {
+          case "Delete":
+            response = await deleteFile({
+              fileType,
+              fileId,
+              userId,
+              pathname,
+              public_id,
+            });
+            break;
+          case "Rename":
+            response = await renameFile({
+              fileType,
+              fileId,
+              userId,
+              pathname,
+              newName,
+              extension,
+            });
+            break;
+          default:
+            setIsLoading(false);
+            return;
+        }
+        if (response) {
+          handleApiResponseMessages(
+            response?.message as string,
+            response?.status as number
+          );
+        }
+      } catch (error: any) {
+        handleApiResponseMessages(error?.message, error?.status);
+      } finally {
+        setIsLoading(false);
+        setIsDialogOpen(false);
       }
-    } catch (error) {
-      setLoader(false);
-      throw new Error(error as any);
-    }
-  };
+    },
+    [
+      fileType,
+      fileId,
+      userId,
+      pathname,
+      public_id,
+      newName,
+      extension,
+      handleApiResponseMessages,
+    ]
+  );
 
   return (
     <div className="shrink-0">
-      <Image
-        src={"/icons/dots.svg"}
-        alt="image"
-        width={8}
-        height={8}
-        className="cursor-pointer"
-        onClick={() => setOptions(!options)}
-      />
-      <DropdownMenu open={options} onOpenChange={setOptions}>
-        <DropdownMenuTrigger></DropdownMenuTrigger>
+      <DropdownMenu open={isOptionsOpen} onOpenChange={setIsOptionsOpen}>
+        <DropdownMenuTrigger>
+          <Image
+            src={"/icons/dots.svg"}
+            alt="image"
+            width={8}
+            height={8}
+            className="cursor-pointer"
+          />
+        </DropdownMenuTrigger>
         <DropdownMenuContent className="w-[180px]">
           <DropdownMenuLabel>Title</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          {/* <div className="flex"></div> */}
           {optionsData.map((option, index) => (
             <DropdownMenuItem
               key={index}
               className="flex justify-start items-center gap-x-2 cursor-pointer"
               onClick={() => {
                 if (option.name === "Download") {
-                  setOptions(false);
+                  setIsOptionsOpen(false);
                 } else {
-                  setAction(option.name);
-                  setOpenDialog(true);
-                  setOptions(false);
+                  setActionType(option.name);
+                  setIsDialogOpen(true);
+                  setIsOptionsOpen(false);
                 }
               }}
             >
@@ -176,17 +157,17 @@ const DashboardUploadActions = ({
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
-      {openDialog && (
+
+      {isDialogOpen && (
         <DashboardUploadActionsDialog
-          action={action}
-          openDialog={openDialog}
-          setOpenDialog={setOpenDialog}
+          action={actionType}
+          openDialog={isDialogOpen}
+          setOpenDialog={setIsDialogOpen}
           handleActions={handleActions}
-          loader={loader}
+          loader={isLoading}
           setNewName={setNewName}
           newName={newName}
           file={file}
-          // detailsData={detailsData}
         />
       )}
     </div>

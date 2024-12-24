@@ -10,6 +10,7 @@ import {
 
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { calculatePercentage } from "@/lib/utils";
+import { useMemo } from "react";
 
 const chartConfig = {
   size: {
@@ -22,7 +23,13 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export const DashbaordChart = ({ used = 50 }: { used: number }) => {
-  const chartData = [{ storage: "used", 10: used, fill: "white" }];
+  const chartData = useMemo(() => {
+    return [{ storage: "used", 10: used, fill: "white" }];
+  }, [used]);
+
+  const endAngle = useMemo(() => {
+    return Number(calculatePercentage(used)) + 90;
+  }, [used]);
 
   return (
     <ChartContainer
@@ -32,7 +39,7 @@ export const DashbaordChart = ({ used = 50 }: { used: number }) => {
       <RadialBarChart
         data={chartData}
         startAngle={90}
-        endAngle={Number(calculatePercentage(used)) + 90}
+        endAngle={endAngle}
         innerRadius={80}
         outerRadius={110}
       >
