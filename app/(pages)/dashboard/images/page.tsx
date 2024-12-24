@@ -19,7 +19,6 @@ const DashbaordImages = async ({
   searchParams: Promise<any> | any;
 }) => {
   const user = await loggedInUser();
-  console.log(await searchParams);
   if (user?.status !== 200) {
     return <Typography variant="h2">Empty1</Typography>;
   }

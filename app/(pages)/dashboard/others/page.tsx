@@ -4,8 +4,13 @@ import Typography from "@/components/typography";
 import React from "react";
 import ListFilesCard from "../(components)/(global-cmps)/list-files-card";
 import DashboardPagesHeader from "../(components)/(global-cmps)/pages-header";
+import { getsearchFilteredData, sortFiles } from "@/lib/utils";
 
-const DashbaordOthers = async () => {
+const DashbaordOthers = async ({
+  searchParams,
+}: {
+  searchParams: Promise<any> | any;
+}) => {
   const user = await loggedInUser();
   if (user?.status !== 200) {
     return <Typography variant="h2">Empty1</Typography>;
@@ -44,6 +49,7 @@ const DashbaordOthers = async () => {
   const getFileExtension = (filename: string) => {
     return filename?.split(".").pop()?.toLowerCase() || "";
   };
+  const { query, sort } = searchParams;
 
   console.log(user);
 
@@ -56,10 +62,16 @@ const DashbaordOthers = async () => {
         </Typography>
       ) : (
         <ListFilesCard
-          user={documents?.filter((document: any) => {
-            const fileExtension = getFileExtension(document.filename);
-            return !documentExtensions.includes(fileExtension); // Show only matching extensions
-          })}
+          user={
+            query
+              ? getsearchFilteredData({ query, data: documents as any })
+              : sort
+              ? sortFiles(documents, sort)
+              : documents?.filter((document: any) => {
+                  const fileExtension = getFileExtension(document.filename);
+                  return documentExtensions.includes(fileExtension);
+                })
+          }
           userId={user?.user?._id}
           filetype="documents"
         />
