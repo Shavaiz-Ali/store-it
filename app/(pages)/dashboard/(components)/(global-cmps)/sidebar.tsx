@@ -3,6 +3,7 @@ import Image from "next/image";
 import React from "react";
 import Typography from "../../../../../components/typography";
 import DashbaordSideBarLinks from "./sidebar-links";
+import Link from "next/link";
 
 const DashbaordSideBar = ({ user }: any) => {
   // console.lo;
@@ -10,24 +11,26 @@ const DashbaordSideBar = ({ user }: any) => {
     <div className="w-full h-full sm:flex flex-col justify-between items-start overflow-hidden">
       <div className="flex flex-col  w-full gap-3">
         <div className="flex sm:hidden lg:flex shrink-0 sm:w-[210px]">
-          <Image
-            src={"/icons/logo-full-brand.svg"}
-            alt=""
-            height={52}
-            width={161}
-            className="h-auto hidden sm:block"
-            priority={false}
-          />
-        </div>
-        <div className="hidden sm:flex lg:hidden">
-          <Image
-            src={"/icons/logo-brand.svg"}
-            alt=""
-            height={52}
-            width={52}
-            className="h-auto"
-            priority={false}
-          />
+          <Link href={"/dashboard"}>
+            <Image
+              src={"/icons/logo-full-brand.svg"}
+              alt=""
+              height={52}
+              width={161}
+              className="h-auto hidden sm:block"
+              priority={false}
+            />
+            <div className="hidden sm:flex lg:hidden">
+              <Image
+                src={"/icons/logo-brand.svg"}
+                alt=""
+                height={52}
+                width={52}
+                className="h-auto"
+                priority={false}
+              />
+            </div>
+          </Link>
         </div>
         {/* sidebar */}
         <DashbaordSideBarLinks />
