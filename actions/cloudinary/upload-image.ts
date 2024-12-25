@@ -33,9 +33,7 @@ export const uploadImageToCloudinary = async ({
 }) => {
   await connectDB();
   try {
-    console.log(id);
     if (!id) {
-      console.error("Missing userId");
       return {
         success: false,
         message: "Unauthorized access!",
@@ -45,7 +43,6 @@ export const uploadImageToCloudinary = async ({
 
     const file = formdata.get("file") as File;
     if (!file || !file.name || !file.size) {
-      console.error("Invalid file:", file);
       return {
         success: false,
         message: "Invalid or missing file",
@@ -85,8 +82,6 @@ export const uploadImageToCloudinary = async ({
       };
     }
 
-    console.log(uploadResult?.public_id);
-
     // Save Image to Database
     const imageDocument = await Image.create({
       url: uploadResult.url,
@@ -95,8 +90,6 @@ export const uploadImageToCloudinary = async ({
       size: file.size,
       format: file.type,
     });
-
-    console.log(imageDocument);
 
     if (!imageDocument) {
       return {
@@ -130,7 +123,6 @@ export const uploadImageToCloudinary = async ({
       return { success: false, message: "Error updating user", status: 500 };
     }
 
-    console.log(path);
     revalidatePath(path);
 
     // // Serialize fields manually

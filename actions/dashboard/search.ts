@@ -9,16 +9,12 @@ import { cookies } from "next/headers";
 export const SearchFile = async ({ query }: { query: string }) => {
   await connectDB();
 
-  console.log("Query received from front-end:", query);
-
   try {
     // Get the access token from cookies
     const token = (await cookies()).get("accessToken");
     if (!token) {
       return { success: false, message: "No access token found", status: 401 };
     }
-
-    console.log("Access Token:", token.value);
 
     // Decode token securely
     const decodedToken = jwtDecode<{ userId: string; exp: number }>(
@@ -34,8 +30,6 @@ export const SearchFile = async ({ query }: { query: string }) => {
     if (!userId) {
       return { success: false, message: "Unauthorized access", status: 404 };
     }
-
-    console.log("Logged-in User ID:", userId);
 
     if (!query) {
       return {
@@ -84,8 +78,6 @@ export const SearchFile = async ({ query }: { query: string }) => {
       };
     }
 
-    console.log("User Data with Populated Files:", user);
-
     // Filter out users with no matching related files
     const filteredFiles = {
       images: user.images,
@@ -93,7 +85,6 @@ export const SearchFile = async ({ query }: { query: string }) => {
       documents: user.documents,
     };
 
-    console.log(filteredFiles);
     if (
       filteredFiles.images.length === 0 &&
       filteredFiles.videos.length === 0 &&
@@ -139,8 +130,6 @@ export const SearchFile = async ({ query }: { query: string }) => {
         type: "document",
       })),
     ];
-
-    console.log("all files", allFiles);
 
     return {
       success: true,

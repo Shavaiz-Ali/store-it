@@ -7,15 +7,12 @@ import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 
 export const getFilesSize = async ({ type }: string | any) => {
-  console.log("this is type", type);
   await connectDB();
   try {
     const token = (await cookies()).get("accessToken");
     if (!token) {
       return { success: false, message: "No access token found", status: 401 };
     }
-
-    console.log("Access Token:", token.value);
 
     // Decode token securely
     const decodedToken = jwtDecode<{ userId: string; exp: number }>(

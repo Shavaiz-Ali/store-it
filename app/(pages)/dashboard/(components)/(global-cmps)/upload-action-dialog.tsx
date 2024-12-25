@@ -39,7 +39,6 @@ const DashboardUploadActionsDialog = ({
   file: any;
   // detailsData: any[];
 }) => {
-  console.log(file);
   const detailsData = [
     { name: "Format", value: file?.format, id: Math.random() },
     { name: "Size", value: convertFileSize(file?.size), id: Math.random() },

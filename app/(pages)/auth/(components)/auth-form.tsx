@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+// components/auth/AuthForm.tsx
 "use client";
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createAccount } from "@/actions/auth/register";
+import { Login } from "@/actions/auth/login";
+import { sendOTP } from "@/actions/nodemailer";
+import { verifyOTP } from "@/actions/auth/otp-verify";
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -15,29 +18,27 @@ import { Input } from "@/components/ui/input";
 import { FormType, FormValidationSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
 import OtpForm from "./otp-form";
-import { sendOTP } from "@/actions/nodemailer";
-import { verifyOTP } from "@/actions/auth/otp-verify";
 import { useRouter } from "next/navigation";
-// import FormApiMessage from "./form-message";
-import { toast } from "@/hooks/use-toast";
-import { Login } from "@/actions/auth/login";
-import Typography from "../../../../components/typography";
 import { useAlertMessages } from "@/hooks/use-alerts";
+import Typography from "../../../../components/typography";
 
-const AuthForm = (type: { type: FormType }) => {
+interface AuthFormProps {
+  type: FormType;
+}
+
+const AuthForm: React.FC<AuthFormProps> = ({ type }) => {
   const [openOtpPopUp, setOtpPopUp] = useState(false);
-  const formSchema = FormValidationSchema(type.type);
   const [loading, setLoading] = useState(false);
-  const [userOTP, setUserOTP] = React.useState<string>("");
-  const [formData, setFormData] = useState<FormData | undefined>(undefined);
+  const [userOTP, setUserOTP] = useState<string>("");
   const [otp, setOTP] = useState<string | undefined>(undefined);
+  const [formData, setFormData] = useState<FormData | undefined>(undefined);
 
   const router = useRouter();
-
+  const formSchema = FormValidationSchema(type);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,8 +50,8 @@ const AuthForm = (type: { type: FormType }) => {
 
   const { handleApiResponseMessages } = useAlertMessages();
 
-  //creating user after otp verfication
-  const handleCreateUser = async () => {
+  // Only useCallback here because its being passed as a prop to the OtpForm component, where it will be used.
+  const handleCreateUser = useCallback(async () => {
     if (!otp || !userOTP) return;
     setLoading(true);
     try {
@@ -83,33 +84,31 @@ const AuthForm = (type: { type: FormType }) => {
       console.log(error);
       throw new Error(error as any);
     }
-  };
+  }, [handleApiResponseMessages, otp, userOTP, formData, router]);
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log(data);
     try {
       const formData = new FormData();
       formData.append("email", data.email);
       formData.append("fullName", data?.fullName as string);
       formData.append("password", data?.password as string);
       setFormData(formData);
-      if (type.type === "register") {
+      if (type === "register") {
         setLoading(true);
-        const otpSend = await sendOTP(formData as FormData);
-        console.log(otpSend);
+        const otpSend = await sendOTP(formData);
         handleApiResponseMessages(
           otpSend?.message as string,
           otpSend?.status as number
         );
         if (otpSend?.status === 200) {
           setLoading(false);
-          setOTP(otpSend?.otp as string | undefined);
+          setOTP(otpSend.otp);
           setOtpPopUp(true);
         }
         setLoading(false);
       } else {
         setLoading(true);
-        const login = await Login(formData as FormData);
+        const login = await Login(formData);
         handleApiResponseMessages(
           login?.message as string,
           login?.status as number
@@ -118,7 +117,6 @@ const AuthForm = (type: { type: FormType }) => {
           setLoading(false);
           window.location.href = "/dashboard";
         }
-
         setLoading(false);
       }
     } catch (error) {
@@ -138,9 +136,9 @@ const AuthForm = (type: { type: FormType }) => {
             variant="h1"
             className="text-[46px] leading-[56px] text-backgroundGrayLight"
           >
-            {type.type === "login" ? "Login" : "Create Account"}
+            {type === "login" ? "Login" : "Create Account"}
           </Typography>
-          {type.type === "register" ? (
+          {type === "register" ? (
             <FormField
               control={form.control}
               name="fullName"
@@ -232,13 +230,13 @@ const AuthForm = (type: { type: FormType }) => {
               </div>
             )}
             <Typography variant="button" className="text-[#ffffff]">
-              {type.type === "login" ? "Login" : "Create Account"}
+              {type === "login" ? "Login" : "Create Account"}
             </Typography>
           </Button>
 
           <div className="flex justify-center items-center gap-x-0.5">
             <Typography variant="h5">
-              {type.type === "register" ? (
+              {type === "register" ? (
                 <>
                   <span>Already have an account?</span>{" "}
                   <Link

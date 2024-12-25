@@ -12,8 +12,6 @@ export const createAccount = async (formdata: FormData) => {
     const email = formdata.get("email") as string;
     const password = formdata.get("password") as string;
 
-    console.log("Received data:", fullName, email);
-
     // Validate input fields
     if (!email || !fullName || !password) {
       return {

@@ -34,9 +34,7 @@ export const uploadVideoToCloudinary = async ({
 }) => {
   await connectDB();
   try {
-    console.log(id);
     if (!id) {
-      console.error("Missing userId");
       return {
         success: false,
         message: "Unauthorized access!",
@@ -128,7 +126,6 @@ export const uploadVideoToCloudinary = async ({
       return { success: false, message: "Error updating user", status: 500 };
     }
 
-    console.log("path to revalidate", path);
     revalidatePath(path && "/");
 
     return {

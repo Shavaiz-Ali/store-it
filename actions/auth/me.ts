@@ -15,8 +15,6 @@ export const loggedInUser = async () => {
       return { success: false, message: "No access token found", status: 401 };
     }
 
-    console.log("Access Token:", token.value);
-
     // Decode token securely
     const decodedToken = jwtDecode<{ userId: string; exp: number }>(
       token.value as string

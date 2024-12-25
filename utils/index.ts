@@ -7,7 +7,7 @@ import SMTPTransport from "nodemailer/lib/smtp-transport";
 const transpost = nodemailer.createTransport({
   host: process.env.MAIL_HOST,
   port: process.env.MAIL_PORT,
-  secure: process.env.NODE_ENV !== "development",
+  secure: process.env.NODE_ENV !== "production",
   auth: {
     user: "shavaizali159@gmail.com",
     pass: "eccd yjvc goem oekc",

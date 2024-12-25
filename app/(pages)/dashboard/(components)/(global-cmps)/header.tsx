@@ -6,6 +6,7 @@ import HeaderSearch from "./search";
 import DashbaordFileUpload from "./file-upload";
 import DashboardSidebarMobile from "./sidebar-mobile";
 import { loggedInUser } from "@/actions/auth/me";
+import Link from "next/link";
 // import { useToast } from "@/hooks/use-toast";
 // import { useAlertMessages } from "@/hooks/use-alerts";
 
@@ -50,7 +51,7 @@ const DashboardHeader = () => {
   return (
     <>
       <header className="flex justify-between items-center h-[116px] w-full lg:gap-4">
-        <div className="block sm:hidden">
+        <Link href={"/dashboard"} className="block sm:hidden">
           <Image
             src={"/icons/logo-full-brand.svg"}
             alt=""
@@ -58,7 +59,7 @@ const DashboardHeader = () => {
             width={120}
             className="h-auto"
           />
-        </div>
+        </Link>
         <div className="hidden sm:block lg:w-auto w-full">
           <HeaderSearch />
         </div>

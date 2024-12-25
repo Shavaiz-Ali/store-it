@@ -35,7 +35,6 @@ const DashboardRecentUploads = ({
       {recentUploads && recentUploads && recentUploads?.length > 0 ? (
         recentUploads.map((recent: any) => {
           const { type, extension } = getFileType(recent?.filename);
-          console.log(type);
           const color = getColor(extension, type);
           const url = getFileUrl(type);
           return (

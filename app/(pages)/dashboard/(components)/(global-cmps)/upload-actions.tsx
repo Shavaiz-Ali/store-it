@@ -86,6 +86,9 @@ const DashboardUploadActions: React.FC<DashboardUploadActionsProps> = ({
               extension,
             });
             break;
+          case "Download":
+            alert("Download file logic here");
+            break;
           default:
             setIsLoading(false);
             return;
@@ -136,6 +139,8 @@ const DashboardUploadActions: React.FC<DashboardUploadActionsProps> = ({
               className="flex justify-start items-center gap-x-2 cursor-pointer"
               onClick={() => {
                 if (option.name === "Download") {
+                  window.open(file.url, "_blank");
+                  // handleActions({ actionType: "Download" });
                   setIsOptionsOpen(false);
                 } else {
                   setActionType(option.name);

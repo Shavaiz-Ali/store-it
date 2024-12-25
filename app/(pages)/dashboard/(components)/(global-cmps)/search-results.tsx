@@ -32,7 +32,10 @@ const SearchResults = ({
 }) => {
   const router = useRouter();
   return (
-    <div className="absolute top-16 left-0 w-full  shadow-lg shadow-[#5968B20F] border py-3 px-4 rounded-[16px] z-[99999999999] bg-white space-y-2 max-h-[400px] overflow-y-scroll ">
+    <div
+      className="absolute top-16 left-0 w-full  shadow-lg shadow-[#5968B20F] border py-3 px-4 rounded-[16px] z-[99999999999] bg-white space-y-2 max-h-[400px] overflow-y-scroll "
+      key={Math.random()}
+    >
       {searchResults && searchResults?.length > 0 ? (
         searchResults?.map((search) => {
           const { type, extension } = getFileType(search?._doc?.filename);

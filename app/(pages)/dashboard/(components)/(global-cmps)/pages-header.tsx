@@ -37,11 +37,9 @@ const DashboardPagesHeader = ({
   }, [user]);
 
   useEffect(() => {
-    console.log("triggressd");
     getSize();
   }, [user]);
 
-  console.log("this is file size", filesSize);
   return (
     <div className="space-y-2 w-full">
       <Typography variant="h2">{title}</Typography>

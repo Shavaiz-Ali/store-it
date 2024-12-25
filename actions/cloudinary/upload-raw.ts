@@ -33,9 +33,7 @@ export const uploadRawToCloudinary = async ({
 }) => {
   await connectDB();
   try {
-    console.log(id);
     if (!id) {
-      console.error("Missing userId");
       return {
         success: false,
         message: "Unauthorized access!",
@@ -127,7 +125,6 @@ export const uploadRawToCloudinary = async ({
       return { success: false, message: "Error updating user", status: 500 };
     }
 
-    console.log(path);
     revalidatePath(path);
 
     return {

@@ -34,28 +34,34 @@ const ListFilesCard = ({
             key={user?._id}
           >
             <div className="flex justify-between items-center w-full">
-              <div className="relative size-20 rounded-full bg-primaryOrangeLight/10 flex justify-center items-center overflow-hidden">
-                {type === "image" && !user?.filename?.includes("svg") ? (
-                  <Image
-                    src={user?.url}
-                    alt="folder"
-                    fill
-                    className={cn("object-cover rounded-full", {
-                      "w-[40px] h-[40px] object-none rounded-none":
-                        user?.filename?.includes("svg"),
-                      "w-[10px] h-[10px]": user?.filename?.includes("dots.svg"),
-                    })}
-                    priority={false}
-                  />
-                ) : (
-                  <Image
-                    src={getFileIcon(extension, type)}
-                    alt="folder"
-                    height={40}
-                    width={40}
-                    priority={false}
-                  />
-                )}
+              <div
+                className="relative size-20 rounded-full bg-primaryOrangeLight/10 flex justify-center items-center overflow-hidden"
+                // onClick={() => window.open(user?.url, "_blank")}
+              >
+                <a href={user?.url} target="_blank" rel="noopener noreferrer">
+                  {type === "image" && !user?.filename?.includes("svg") ? (
+                    <Image
+                      src={user?.url}
+                      alt="folder"
+                      fill
+                      className={cn("object-cover rounded-full", {
+                        "w-[40px] h-[40px] object-none rounded-none":
+                          user?.filename?.includes("svg"),
+                        "w-[10px] h-[10px]":
+                          user?.filename?.includes("dots.svg"),
+                      })}
+                      priority={false}
+                    />
+                  ) : (
+                    <Image
+                      src={getFileIcon(extension, type)}
+                      alt="folder"
+                      height={40}
+                      width={40}
+                      priority={false}
+                    />
+                  )}
+                </a>
               </div>
               <div className="flex flex-col items-center">
                 <DashboardUploadActions
@@ -73,12 +79,14 @@ const ListFilesCard = ({
               </div>
             </div>
             <div className="space-y-[15px]">
-              <Typography
-                variant="p"
-                className="font-semibold leading-5 line-clamp-2"
-              >
-                {user?.filename}
-              </Typography>
+              <a href={user?.url} target="_blank" rel="noopener noreferrer">
+                <Typography
+                  variant="p"
+                  className="font-semibold leading-5 line-clamp-2"
+                >
+                  {user?.filename}
+                </Typography>
+              </a>
               <Typography variant="p" className="">
                 {formatDateTime(user?.updatedAt)}
               </Typography>

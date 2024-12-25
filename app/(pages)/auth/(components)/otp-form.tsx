@@ -26,7 +26,6 @@ const OtpForm = ({
   loading: boolean;
   setOtpPopUp: (value: boolean) => void;
 }) => {
-  console.log(userOTP);
   return (
     <div className="fixed top-0 left-0 min-h-screen w-full bg-[#333F4E]/20 flex justify-center items-center">
       <div className="relative w-[95%] h-[360px] sm:w-[550px] bg-white flex flex-col gap-[6px] justify-center items-center rounded-[20px] py-[40px] px-[20px] sm:px-[36px]">

@@ -19,8 +19,6 @@ export const sendOTP = async (formData: FormData) => {
   try {
     const email = formData.get("email") as string;
 
-    console.log("Email received:", email);
-
     // Check if email is provided
     if (!email) {
       return {
