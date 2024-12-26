@@ -4,17 +4,11 @@ import DashboardFileTypes from "./(components)/(root-cmps)/file-types";
 import DashboardRecentUploads from "./(components)/(root-cmps)/recent-uploads";
 import { loggedInUser } from "@/actions/auth/me";
 import { getFilesSize } from "@/actions/file-size";
-// import { getUsageSummary } from "@/lib/utils";
-// import { getFilesSize } from "@/actions/file-size";
 import { convertFileSize, formatDateTime, getUsageSummary } from "@/lib/utils";
-// import { getFilesSize } from "@/actions/file-size";
-// import { getFilesSize } from "@/actions/file-size";
 
 const DashboardPage = async () => {
   const user = await loggedInUser();
   const usageSummary = getUsageSummary();
-
-  if (!user?.user) return;
 
   // Prefetch all data
   const fileTypesData = await Promise.all(
@@ -42,7 +36,7 @@ const DashboardPage = async () => {
       <div className="space-y-[42px]">
         <DashbaordStorage userDetails={user && user?.user && user?.user} />
         <div className="grid grid-cols-1 md:grid-cols-2 l:grid-cols-1 xlg:grid-cols-2 w-full gap-8">
-          <DashboardFileTypes fileTypesData={fileTypesData} />
+          <DashboardFileTypes fileTypesData={fileTypesData} user={user} />
         </div>
       </div>
       <DashboardRecentUploads

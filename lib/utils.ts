@@ -35,7 +35,7 @@ export const calculatePercentage = (sizeInBytes: number) => {
 
 export const getFileType = (fileName: string) => {
   const extension = fileName.split(".").pop()?.toLowerCase();
-
+  console.log(extension);
   if (!extension) return { type: "other", extension: "" };
 
   const documentExtensions = [
@@ -178,7 +178,7 @@ export const getFileIcon = (
 };
 
 // DASHBOARD UTILS
-export const getUsageSummary = (size?: any) => {
+export const getUsageSummary = (data?: any) => {
   return [
     {
       title: "Documents",
@@ -318,7 +318,7 @@ export const getFileMainIcon = (
     default:
       switch (type) {
         case "image":
-          return "/icons/Video.svg";
+          return "/icons/Image.svg";
         case "document":
           return "/icons/Folder.svg";
         case "video":

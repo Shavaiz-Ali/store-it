@@ -70,10 +70,7 @@ const DashboardUploadActionsDialog = ({
           {action === "Delete" && (
             <DialogDescription className="text-backgroundGrayLight text-center font-[family-name:var(--font-poppins-regular)]  text-[14px] leading-[16px] font-[400]">
               Are you sure you want to delete this{" "}
-              <span className="text-primaryOrangeLight">
-                DevOverflow Intro.mp4
-              </span>
-              ?
+              <span className="text-primaryOrangeLight">{file?.filename}</span>?
             </DialogDescription>
           )}
           {action === "Rename" && (
@@ -96,10 +93,10 @@ const DashboardUploadActionsDialog = ({
               </div>
               <div className="flex flex-col justify-between">
                 <Typography variant="h5" className="font-[600]">
-                  DevOverflow Intro.mp4
+                  {file?.filename}
                 </Typography>
                 <Typography variant="p" className="text-[12px] text-[#A3B2C7]">
-                  10 GB - 10:09pm, 10 Oct
+                  {formatDateTime(file?.updatedAt)}
                 </Typography>
               </div>
             </div>
@@ -140,10 +137,10 @@ const DashboardUploadActionsDialog = ({
               </div>
               <div className="flex flex-col justify-between">
                 <Typography variant="h5" className="font-[600]">
-                  DevOverflow Intro.mp4
+                  {file?.filename}
                 </Typography>
                 <Typography variant="p" className="text-[12px] text-[#A3B2C7]">
-                  10 GB - 10:09pm, 10 Oct
+                  {formatDateTime(file?.updatedAt)}
                 </Typography>
               </div>
             </div>

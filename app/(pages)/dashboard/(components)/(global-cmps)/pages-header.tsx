@@ -3,10 +3,9 @@
 "use client";
 
 import Typography from "@/components/typography";
-import React, { useCallback, useEffect } from "react";
 import DashboardSort from "./sort";
-import { getFilesSize } from "@/actions/file-size";
-import { convertFileSize } from "@/lib/utils";
+import { useGetFileSize } from "@/hooks/use-getFileSize";
+import { useEffect } from "react";
 
 const DashboardPagesHeader = ({
   title,
@@ -17,27 +16,10 @@ const DashboardPagesHeader = ({
   user: any;
   type: string;
 }) => {
-  const [filesSize, setFilesSize] = React.useState<undefined | null>(null);
-
-  const getSize = useCallback(() => {
-    const size = getFilesSize({ type })
-      .then((size) => {
-        if (size?.size) {
-          const finalSize = convertFileSize(size?.size as number);
-          setFilesSize(finalSize as any);
-        } else {
-          const finalSize = convertFileSize(0);
-          setFilesSize(finalSize as any);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    return size;
-  }, [user]);
+  const { filesSize, getSize } = useGetFileSize({ user });
 
   useEffect(() => {
-    getSize();
+    getSize({ type });
   }, [user]);
 
   return (
@@ -46,7 +28,9 @@ const DashboardPagesHeader = ({
       <div className="flex sm:flex-row flex-col justify-between sm:items-center w-full sm:gap-0 gap-y-5">
         <Typography variant="h5">
           Total:{" "}
-          <span className="font-semibold">{filesSize ? filesSize : "0MB"}</span>
+          <span className="font-semibold">
+            {filesSize?.size ? filesSize?.size : "0MB"}
+          </span>
         </Typography>
         <div className="flex justify-center items-center gap-x-2 sm:w-auto w-full">
           <Typography className="sm:block hidden" variant="p">
