@@ -12,6 +12,10 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
+// export async function generateMetadata({ pathName }) {
+//   console.log(pathName);
+// }
+
 export default async function DashboardLayout({
   children,
 }: Readonly<{

@@ -5,6 +5,7 @@ import { loggedInUser } from "@/actions/auth/me";
 import Typography from "@/components/typography";
 import DashboardPagesHeader from "../(components)/(global-cmps)/pages-header";
 import { getsearchFilteredData, sortFiles } from "@/lib/utils";
+import { Metadata } from "next";
 
 // interface Props {
 //   searchParams: {
@@ -12,6 +13,11 @@ import { getsearchFilteredData, sortFiles } from "@/lib/utils";
 //     sort?: string;
 //   };
 // }
+
+export const metaData: Metadata = {
+  title: "Dashboard - Images",
+  description: "Dashboard - Images",
+};
 
 const DashbaordImages = async ({
   searchParams,

@@ -5,6 +5,12 @@ import React from "react";
 import ListFilesCard from "../(components)/(global-cmps)/list-files-card";
 import DashboardPagesHeader from "../(components)/(global-cmps)/pages-header";
 import { getsearchFilteredData, sortFiles } from "@/lib/utils";
+import type { Metadata } from "next";
+
+export const metaData: Metadata = {
+  title: "Dashboard - Documents",
+  description: "Dashboard - Documents",
+};
 
 const DashboardDocuments = async ({
   searchParams,
